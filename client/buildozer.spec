@@ -1,4 +1,4 @@
-[app]
+﻿[app]
 
 # (str) Title of your application
 title = KvDeveloper Client
@@ -44,10 +44,10 @@ requirements = python3, kivy==2.3.0, https://github.com/CarbonKivy/CarbonKivy/ar
 # requirements.source.kivy = ../../kivy
 
 # (str) Presplash of the application
-presplash.filename = %(source.dir)s/images/kvdeveloper_banner_outfit_clear512.png
+presplash.filename = %(source.dir)s/assets/images/kvdeveloper_banner_outfit_clear512.png
 
 # (str) Icon of the application
-icon.filename = %(source.dir)s/images/kvdeveloper_logo512.png
+icon.filename = %(source.dir)s/assets/images/kvdeveloper_logo512.png
 
 # (list) Supported orientations
 # Valid options are: landscape, portrait, portrait-reverse or landscape-reverse
