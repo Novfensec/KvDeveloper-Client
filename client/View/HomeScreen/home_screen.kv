@@ -1,0 +1,96 @@
+<HomeScreenView>:
+
+    CStackLayout:
+        size_hint: 1, 1
+        spacing: dp(16)
+        padding: dp(16)
+
+        CBoxLayout:
+            adaptive: [False, True]
+            spacing: dp(8)
+
+            AsyncImage:
+                source: "assets/images/kvdeveloper_logo64.png"
+                size_hint: None, None
+                size: dp(32), dp(32)
+                pos_hint: {'center_y': 0.5}
+
+            CLabel:
+                text: "KvDeveloper Client"
+                style: "heading_03"
+                pos_hint: {'center_y': 0.5}
+
+            CButtonGhost:
+                icon: "settings"
+                role: "Large Productive"
+
+        CRelativeLayout:
+
+            AsyncImage:
+                source: "assets/images/magicpattern.jpg"
+                size_hint: 1,1
+                fit_mode: "cover"
+
+            CScrollView:
+                bg_color: [1, 1, 1, 0.9]
+                always_overscroll: False
+
+                MainLayout:
+                    id: MainLayout
+                    orientation: 'vertical'
+                    adaptive: [False, True]
+                    padding: dp(16)
+                    spacing: dp(16)
+
+
+<MainLayout@CBoxLayout>:
+
+    CBoxLayout:
+        adaptive: [False, True]
+        spacing: dp(8)
+
+        CIcon:
+            icon: "development"
+            pos_hint: {'center_y': 0.5}
+
+        CLabel:
+            text: "Development servers"
+            pos_hint: {'center_y': 0.5}
+        
+        CButtonGhost:
+            icon: "help"
+            role: "Large Productive"
+
+    CDivider:
+
+    CBoxLayout:
+        orientation: "vertical"
+        spacing: dp(48)
+        padding: [0, dp(32), 0, dp(16)]
+        adaptive: [False, True]
+
+        CTextInputLayout:
+            bg_color: app.transparent
+            hover_enabled: False
+            CTextInputLabel:
+                text: "Server Url"
+            CTextInput:
+                id: ServerUrlEntry
+                hint_text: "Enter server url"
+                input_type: "url"
+            CTextInputHelperText:
+                text: "http://ip_address:port"
+
+        CButtonPrimary:
+            text: "Connect"
+            icon: "connect"
+            role: "Large Productive"
+            on_press:
+                app.launch(ServerUrlEntry.text)
+
+    CDivider:
+
+    CButtonGhost:
+        text: "Scan QR code"
+        icon: "qr-code"
+        role: "Large Productive"

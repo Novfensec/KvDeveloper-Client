@@ -1,0 +1,3 @@
+kivy>=2.3.0
+https://github.com/CarbonKivy/CarbonKivy/archive/master.zip
+pillow>=10.0.0
