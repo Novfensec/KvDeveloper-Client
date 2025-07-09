@@ -33,7 +33,7 @@ jobs:
       - name: Cache Buildozer directory in app
         uses: actions/cache@v4
         with:
-          path: .buildozer
+          path: client/.buildozer
           key: ${{ runner.os }}-buildozer-app
           restore-keys: |
             ${{ runner.os }}-buildozer-app

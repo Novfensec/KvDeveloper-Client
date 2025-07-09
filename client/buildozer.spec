@@ -226,7 +226,7 @@ android.add_src = ./src
 #android.add_packaging_options =
 
 # (list) Java classes to add as activities to the manifest.
-#android.add_activities = com.example.ExampleActivity
+android.add_activities = org.kvdeveloper.client.ClientActivity
 
 # (str) OUYA Console category. Should be one of GAME or APP
 # If you leave this blank, OUYA support will not be enabled

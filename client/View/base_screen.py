@@ -1,6 +1,11 @@
 from kivy.properties import ObjectProperty
 from kivy.app import App
 from carbonkivy.uix.screen import CScreen
+from carbonkivy.uix.loading import CLoadingLayout
+
+
+class LoadingLayout(CLoadingLayout):
+    pass
 
 
 class BaseScreenView(CScreen):

@@ -5,11 +5,15 @@ __all__ = ("ApplicationLauncher",)
 import os, sys, shutil, threading, subprocess # nosec
 import requests
 
+from kivy.app import App
+from kivy.clock import mainthread
+from kivy.core.window import Window
 from kivy.event import EventDispatcher
 from kivy.properties import StringProperty
 from kivy.utils import platform
 
 from carbonkivy.behaviors import DeclarativeBehavior
+from View.base_screen import LoadingLayout
 
 if platform == "android":
     from libs.launcher.android import AppStorageDir, launch_client_activity, finish_client_activity
@@ -30,13 +34,16 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
         super(ApplicationLauncher, self).__init__(**kwargs)
         self.process = None
         self.running = None
+        self.app = App.get_running_app()
+        self.loading_layout = LoadingLayout()
         if platform == "android":
             self.target_dir = os.path.join(AppStorageDir, self.app_name)
         else:    
             self.target_dir = os.path.expanduser(f"~/Applications/{self.app_name}")
 
     def launch_app(self, *args) -> None:
-        self.status = "Starting launch operations.."
+        self.app.status = "Starting launch operations.."
+        self.display_indicator()
         threading.Thread(target=self.download_and_run).start()
 
     def download_and_run(self, *args) -> None:
@@ -45,17 +52,17 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
                 shutil.rmtree(self.target_dir)
             os.makedirs(self.target_dir, exist_ok=True)
 
-            self.status = f"Downloading files from server at {self.server_url}"
+            self.app.status = f"Downloading files from server at {self.server_url}"
             
             files_to_fetch = [self.entrypoint] + self.fetch_kv_files()
             for filename in files_to_fetch:
                 self.download_file_from_server(filename)
 
-            self.status = "Running app..."
+            self.app.status = "Running app..."
             self.run_entrypoint()
 
         except Exception as e:
-            self.status.text = f"Error: {e}"
+            self.app.status = f"Error: {e}"
 
     def fetch_kv_files(self) -> list | None:
         kv_files = []
@@ -107,6 +114,7 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
 
     def run_entrypoint(self) -> None:
         entrypoint_path = os.path.abspath(os.path.join(self.target_dir, self.entrypoint))
+        self.display_indicator(False)
         if platform == "android":
             launch_client_activity(entrypoint_path)
             self.running = False
@@ -125,5 +133,12 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
         print(f"[RESTART] Restarting {self.entrypoint}")
         self.run_entrypoint()
 
-
-
+    @mainthread
+    def display_indicator(self, val: bool = True, *args) -> None:
+        try:
+            if val:
+                Window.add_widget(self.loading_layout)
+            elif val==False:
+                Window.remove_widget(self.loading_layout)
+        except Exception:
+            return

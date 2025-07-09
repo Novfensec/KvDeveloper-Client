@@ -12,6 +12,8 @@ def set_softinput(*args) -> None:
 
 Window.on_restore(Clock.schedule_once(set_softinput, 0.1))
 
+from kivy.properties import StringProperty
+
 from carbonkivy.app import CarbonApp
 from carbonkivy.uix.screenmanager import CScreenManager
 
@@ -24,6 +26,8 @@ class UI(CScreenManager):
 
 
 class KvDeveloperClient(CarbonApp):
+
+    status = StringProperty()
 
     def __init__(self, *args, **kwargs) -> None:
         super(KvDeveloperClient, self).__init__(*args, **kwargs)
@@ -53,6 +57,7 @@ class KvDeveloperClient(CarbonApp):
     def launch(self, server_url: str, *args) -> None:
         self.launcher = ApplicationLauncher(server_url=server_url, entrypoint="main.py", app_name="Demo")
         self.launcher.launch_app()
+        self.launcher = None
 
 
 if __name__ == "__main__":
