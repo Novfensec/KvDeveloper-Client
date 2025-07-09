@@ -131,6 +131,6 @@ jobs:
         with:
           name: package
           path: |
-            bin/*.apk
-            bin/*.aab
+            client/bin/*.apk
+            client/bin/*.aab
           retention-days: 3
