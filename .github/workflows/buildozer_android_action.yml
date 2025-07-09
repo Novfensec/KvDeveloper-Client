@@ -122,7 +122,7 @@ jobs:
         run: |
           cd client
           yes | buildozer -v android debug
-          # yes | buildozer -v android release
+        # yes | buildozer -v android release
         # run this for generating aab (Android App Bundle) [Required by google play]
 
       # Upload artifacts
@@ -131,6 +131,6 @@ jobs:
         with:
           name: package
           path: |
-            bin/*.apk
-            bin/*.aab
+            client/bin/*.apk
+            client/bin/*.aab
           retention-days: 3
