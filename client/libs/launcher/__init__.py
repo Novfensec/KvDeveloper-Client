@@ -113,7 +113,7 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
                 break
 
     def run_entrypoint(self) -> None:
-        entrypoint_path = os.path.abspath(os.path.join(self.target_dir, self.entrypoint))
+        entrypoint_path = os.path.abspath(os.path.join(self.target_dir, self.app_name, self.entrypoint))
         self.display_indicator(False)
         if platform == "android":
             launch_client_activity(entrypoint_path)

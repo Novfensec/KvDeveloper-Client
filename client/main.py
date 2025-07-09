@@ -63,3 +63,21 @@ class KvDeveloperClient(CarbonApp):
 if __name__ == "__main__":
     app = KvDeveloperClient()
     app.run()
+    import sys
+    from kivy.utils import platform
+
+    if platform == "android":
+        from jnius import autoclass
+        activity = autoclass("org.kivy.android.PythonActivity").mActivity
+        log_dir = activity.getExternalFilesDir(None).getAbsolutePath()
+    else:
+        log_dir = os.path.expanduser("~/AppLogs")
+
+    os.makedirs(log_dir, exist_ok=True)
+
+    log_file_path = os.path.join(log_dir, "app_log.txt")
+    sys.stdout = open(log_file_path, "a")
+    sys.stderr = sys.stdout
+
+    print("[LOG] Logging started.")
+

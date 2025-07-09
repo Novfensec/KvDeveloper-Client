@@ -6,7 +6,7 @@ import android.view.KeyEvent;
 import org.kivy.android.PythonActivity;
 
 public class ClientActivity extends PythonActivity {
-    private static final String TAG = "LauncherActivity";
+    private static final String TAG = "ClientActivity";
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
