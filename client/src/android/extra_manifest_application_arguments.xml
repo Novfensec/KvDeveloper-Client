@@ -1,0 +1,5 @@
+<activity
+    android:name="org.kvdeveloper.client.ClientActivity"
+    android:process=":client_process"
+    android:launchMode="singleTask"
+    android:screenOrientation="portrait" />

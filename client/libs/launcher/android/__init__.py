@@ -1,24 +1,26 @@
 import os
 from jnius import autoclass
-from android.runnable import run_on_ui_thread
 
 PythonActivity = autoclass("org.kivy.android.PythonActivity")
 ClientActivity = autoclass("org.kvdeveloper.client.ClientActivity")
 Intent = autoclass("android.content.Intent")
-String = autoclass("java.lang.String")
+Uri = autoclass("android.net.Uri")
 
 activity = PythonActivity.mActivity
-AppStorageDir = os.path.join(activity.getFilesDir().getAbsolutePath(), "Applications")
+AppStorageDir = os.path.join(activity.getExternalDir(None).getAbsolutePath(), "Applications")
 
-@run_on_ui_thread
-def launch_client_activity(entrypoint_path: str, *args) -> None:
-    intent = Intent(activity.get_application_context(), ClientActivity)
-    intent.putExtra("entrypoint", String(entrypoint_path))
-    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+def launch_client_activity(entrypoint_path: str) -> None:
+    app_dir = os.path.dirname(entrypoint_path)
+    uri = Uri.parse("file://" + app_dir)
+
+    intent = Intent(Intent.ACTION_MAIN)
+    intent.setClass(activity, ClientActivity)
+    intent.setData(uri)
+    intent.setAction("org.kivy.LAUNCH")
+    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
     activity.startActivity(intent)
 
-@run_on_ui_thread
-def finish_client_activity(*args) -> None:
+def finish_client_activity() -> None:
     current_activity = PythonActivity.mActivity
     if isinstance(current_activity, ClientActivity):
         current_activity.finish()

@@ -15,10 +15,9 @@ public class ClientActivity extends PythonActivity {
 
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
             Log.d(TAG, "BACK key intercepted!");
-            finish();  // Handle back press or communicate with Python if needed
+            finish();
             return true;
         }
-
         return super.dispatchKeyEvent(event);
     }
 }
