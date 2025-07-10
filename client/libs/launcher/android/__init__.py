@@ -12,7 +12,7 @@ AppStorageDir = os.path.join(activity.getFilesDir().getAbsolutePath(), "Applicat
 
 @run_on_ui_thread
 def launch_client_activity(entrypoint_path: str, *args) -> None:
-    intent = Intent(activity, ClientActivity.class_)
+    intent = Intent(activity.get_application_context(), ClientActivity)
     intent.putExtra("entrypoint", String(entrypoint_path))
     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     activity.startActivity(intent)
