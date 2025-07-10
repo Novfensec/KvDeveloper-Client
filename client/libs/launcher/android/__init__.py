@@ -7,7 +7,7 @@ Intent = autoclass("android.content.Intent")
 Uri = autoclass("android.net.Uri")
 
 activity = PythonActivity.mActivity
-AppStorageDir = os.path.join(activity.getExternalDir(None).getAbsolutePath(), "Applications")
+AppStorageDir = os.path.join(activity.getFilesDir().getAbsolutePath(), "Applications")
 
 def launch_client_activity(entrypoint_path: str) -> None:
     app_dir = os.path.dirname(entrypoint_path)
