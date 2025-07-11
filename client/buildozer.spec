@@ -49,7 +49,7 @@ requirements = python3, kivy==2.3.0, https://github.com/CarbonKivy/CarbonKivy/ar
 # requirements.source.kivy = ../../kivy
 
 # (str) Presplash of the application
-presplash.filename = %(source.dir)s/assets/images/kvdeveloper_banner_outfit_clear720.png
+presplash.filename = %(source.dir)s/assets/images/presplash.png
 
 # (str) Icon of the application
 icon.filename = %(source.dir)s/assets/images/kvdeveloper_logo512.png
@@ -90,7 +90,7 @@ fullscreen = 0
 # red, blue, green, black, white, gray, cyan, magenta, yellow, lightgray,
 # darkgray, grey, lightgrey, darkgrey, aqua, fuchsia, lime, maroon, navy,
 # olive, purple, silver, teal.
-android.presplash_color = #FFFFFF
+android.presplash_color = #000000
 
 # (string) Presplash animation using Lottie format.
 # see https://lottiefiles.com/ for examples and https://airbnb.design/lottie/
@@ -251,7 +251,7 @@ android.add_src = ./src
 #android.res_xml = PATH_TO_FILE,
 
 # (str) launchMode to set for the main activity
-android.manifest.launch_mode = standard
+android.manifest.launch_mode = singleTask
 
 # (str) screenOrientation to set for the main activity.
 # Valid values can be found at https://developer.android.com/guide/topics/manifest/activity-element
