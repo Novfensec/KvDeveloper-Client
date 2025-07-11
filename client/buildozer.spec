@@ -251,7 +251,7 @@ android.add_src = ./src
 #android.res_xml = PATH_TO_FILE,
 
 # (str) launchMode to set for the main activity
-android.manifest.launch_mode = singleTask
+android.manifest.launch_mode = standard
 
 # (str) screenOrientation to set for the main activity.
 # Valid values can be found at https://developer.android.com/guide/topics/manifest/activity-element

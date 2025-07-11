@@ -33,7 +33,6 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
     def __init__(self, **kwargs) -> None:
         super(ApplicationLauncher, self).__init__(**kwargs)
         self.process = None
-        self.running = None
         self.app = App.get_running_app()
         self.loading_layout = LoadingLayout()
         if platform == "android":
@@ -109,17 +108,21 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
             except Exception as e:
                 print(f"[SYNC ERROR] {e}")
             time.sleep(3.0)  # Poll interval
-            if (self.process and (self.process.poll() != None)) or (self.app.running == False):
+            if (self.process and (self.process.poll() != None)) or (App.get_running_app().running == False):
                 break
 
     def run_entrypoint(self) -> None:
         entrypoint_path = os.path.abspath(os.path.join(self.target_dir, self.entrypoint))
         self.display_indicator(False)
-        if platform == "android":
-            launch_client_activity(entrypoint_path)
-        else:
-            self.process = subprocess.Popen([sys.executable, entrypoint_path], cwd=self.target_dir) # nosec
-            print(f"[RUN] {self.entrypoint} launched...")
+        try:
+            if platform == "android":
+                launch_client_activity(entrypoint_path)
+            else:
+                self.process = subprocess.Popen([sys.executable, entrypoint_path], cwd=self.target_dir) # nosec
+                print(f"[RUN] {self.entrypoint} launched...")
+        except Exception as e:
+            print(e)
+            self.app.running = False
 
     def restart_entrypoint(self) -> None:
         if platform == "android":
