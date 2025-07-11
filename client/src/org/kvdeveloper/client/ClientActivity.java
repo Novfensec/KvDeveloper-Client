@@ -11,7 +11,13 @@ public class ClientActivity extends PythonActivity {
     private static final String TAG = "ClientActivity";
 
     @Override
-    protected String getEntryPoint() {
+    protected void onCreate(Bundle savedInstanceState) {
+        Log.i(TAG, "ClientActivity started");
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public String getEntryPoint(String searchDir) {
         Uri uri = getIntent().getData();
         if (uri != null) {
             String path = uri.getPath();
@@ -21,12 +27,6 @@ public class ClientActivity extends PythonActivity {
             Log.w(TAG, "No entrypoint URI passed.");
             finish();
         }
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        Log.i(TAG, "ClientActivity started");
-        super.onCreate(savedInstanceState);
     }
 
     @Override
