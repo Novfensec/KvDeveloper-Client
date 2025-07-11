@@ -87,7 +87,7 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
             r.raise_for_status()
             with open(local_path, "wb") as f:
                 f.write(r.content)
-            print(f"[SYNC] Downloaded: {filename}")
+            print(f"[SYNC] Downloaded {filename} at {local_path}")
         except Exception as e:
             print(f"[ERROR] Failed to download {filename}: {e}")
         self.start_auto_sync()
@@ -109,7 +109,7 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
             except Exception as e:
                 print(f"[SYNC ERROR] {e}")
             time.sleep(3.0)  # Poll interval
-            if (self.process and (self.process.poll() != None)) or (self.running == False):
+            if (self.process and (self.process.poll() != None)) or (self.app.running == False):
                 break
 
     def run_entrypoint(self) -> None:
@@ -117,7 +117,6 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
         self.display_indicator(False)
         if platform == "android":
             launch_client_activity(entrypoint_path)
-            self.running = False
         else:
             self.process = subprocess.Popen([sys.executable, entrypoint_path], cwd=self.target_dir) # nosec
             print(f"[RUN] {self.entrypoint} launched...")

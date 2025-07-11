@@ -1,5 +1,7 @@
 package org.kvdeveloper.client;
 
+import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 
@@ -7,6 +9,25 @@ import org.kivy.android.PythonActivity;
 
 public class ClientActivity extends PythonActivity {
     private static final String TAG = "ClientActivity";
+
+    @Override
+    protected String getEntryPoint() {
+        Uri uri = getIntent().getData();
+        if (uri != null) {
+            String path = uri.getPath();
+            Log.i(TAG, "Launching entrypoint from URI: " + path);
+            return path;
+        } else {
+            Log.w(TAG, "No entrypoint URI passed.");
+            finish();
+        }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        Log.i(TAG, "ClientActivity started");
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {

@@ -42,7 +42,7 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3, kivy==2.3.0, https://github.com/CarbonKivy/CarbonKivy/archive/master.zip, android, requests, pyjnius
+requirements = python3, kivy==2.3.0, https://github.com/CarbonKivy/CarbonKivy/archive/master.zip, android, requests, pyjnius, kaki, watchdog
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -251,7 +251,7 @@ android.add_src = ./src
 #android.res_xml = PATH_TO_FILE,
 
 # (str) launchMode to set for the main activity
-android.manifest.launch_mode = standard
+android.manifest.launch_mode = singleTask
 
 # (str) screenOrientation to set for the main activity.
 # Valid values can be found at https://developer.android.com/guide/topics/manifest/activity-element

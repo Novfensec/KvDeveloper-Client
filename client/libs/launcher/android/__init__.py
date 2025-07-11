@@ -1,5 +1,6 @@
 import os
 from jnius import autoclass
+from android.runnable import run_on_ui_thread # type: ignore
 
 PythonActivity = autoclass("org.kivy.android.PythonActivity")
 ClientActivity = autoclass("org.kvdeveloper.client.ClientActivity")
@@ -9,14 +10,13 @@ Uri = autoclass("android.net.Uri")
 activity = PythonActivity.mActivity
 AppStorageDir = os.path.join(activity.getFilesDir().getAbsolutePath(), "Applications")
 
+@run_on_ui_thread
 def launch_client_activity(entrypoint_path: str) -> None:
     app_dir = os.path.dirname(entrypoint_path)
     uri = Uri.parse("file://" + app_dir)
 
-    intent = Intent(Intent.ACTION_MAIN)
-    intent.setClass(activity, ClientActivity)
+    intent = Intent(activity.getApplicationContext(), ClientActivity)
     intent.setData(uri)
-    intent.setAction("org.kivy.LAUNCH")
     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
     activity.startActivity(intent)
 

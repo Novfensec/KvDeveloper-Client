@@ -12,7 +12,7 @@ def set_softinput(*args) -> None:
 
 Window.on_restore(Clock.schedule_once(set_softinput, 0.1))
 
-from kivy.properties import StringProperty
+from kivy.properties import StringProperty, BooleanProperty
 
 from carbonkivy.app import CarbonApp
 from carbonkivy.uix.screenmanager import CScreenManager
@@ -28,6 +28,8 @@ class UI(CScreenManager):
 class KvDeveloperClient(CarbonApp):
 
     status = StringProperty()
+
+    running = BooleanProperty(None, allownone=True)
 
     def __init__(self, *args, **kwargs) -> None:
         super(KvDeveloperClient, self).__init__(*args, **kwargs)
@@ -54,30 +56,18 @@ class KvDeveloperClient(CarbonApp):
         if self.manager_screens.current != destination:
             self.manager_screens.current = destination
 
+    def on_resume(self):
+        self.running = False
+        return super().on_resume()
+
     def launch(self, server_url: str, *args) -> None:
         self.launcher = ApplicationLauncher(server_url=server_url, entrypoint="main.py", app_name="Demo")
         self.launcher.launch_app()
+        self.running = True
         self.launcher = None
 
 
 if __name__ == "__main__":
     app = KvDeveloperClient()
     app.run()
-    import sys
-    from kivy.utils import platform
-
-    if platform == "android":
-        from jnius import autoclass
-        activity = autoclass("org.kivy.android.PythonActivity").mActivity
-        log_dir = activity.getExternalFilesDir(None).getAbsolutePath()
-    else:
-        log_dir = os.path.expanduser("~/AppLogs")
-
-    os.makedirs(log_dir, exist_ok=True)
-
-    log_file_path = os.path.join(log_dir, "app_log.txt")
-    sys.stdout = open(log_file_path, "a")
-    sys.stderr = sys.stdout
-
-    print("[LOG] Logging started.")
 
