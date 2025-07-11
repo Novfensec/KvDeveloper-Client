@@ -27,6 +27,7 @@ public class ClientActivity extends PythonActivity {
             Log.w(TAG, "No entrypoint URI passed.");
             finish();
         }
+        return super.getEntryPoint(searchDir);
     }
 
     @Override
