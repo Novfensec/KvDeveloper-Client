@@ -12,9 +12,7 @@ AppStorageDir = os.path.join(activity.getFilesDir().getAbsolutePath(), "Applicat
 
 @run_on_ui_thread
 def launch_client_activity(entrypoint_path: str) -> None:
-    app_dir = os.path.dirname(entrypoint_path)
-    entrypoint_name = os.path.basename(entrypoint_path)
-    uri = Uri.parse("file://" + app_dir + entrypoint_name)
+    uri = Uri.parse("file://" + entrypoint_path)
 
     intent = Intent(activity.getApplicationContext(), ClientActivity)
     intent.setData(uri)
