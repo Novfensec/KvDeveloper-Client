@@ -4,6 +4,9 @@
 [![Made with Python](https://img.shields.io/badge/Made%20with-Python-blue.svg)](https://www.python.org/)
 [![KvDeveloper Project](https://img.shields.io/badge/Part%20of-KvDeveloper%20Project-blueviolet.svg)](https://github.com/Novfensec/KvDeveloper)
 
+<!-- GitAds-Verify: QCB8LYMU8FNAS8LP4OB1TWLG2R9OR182 -->
+
+
 ## Overview
 
 ![KvDeveloper Client](https://raw.githubusercontent.com/Novfensec/KvDeveloper-Client/master/assets/kvdeveloperclient.jpg)
