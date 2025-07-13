@@ -1,4 +1,4 @@
-# KvDeveloper Client 🚀  
+# KvDeveloper Client
 [![Android Build](https://github.com/Novfensec/KvDeveloper-Client/actions/workflows/buildozer_android_action.yml/badge.svg)](https://github.com/Novfensec/KvDeveloper-Client/actions/workflows/buildozer_android_action.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/Novfensec/KvDeveloper-Client/blob/main/LICENSE)
 [![Made with Python](https://img.shields.io/badge/Made%20with-Python-blue.svg)](https://www.python.org/)
