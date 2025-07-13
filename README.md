@@ -5,7 +5,8 @@
 [![KvDeveloper Project](https://img.shields.io/badge/Part%20of-KvDeveloper%20Project-blueviolet.svg)](https://github.com/Novfensec/KvDeveloper)
 
 ## Overview
-[![KvDeveloper Client](https://raw.githubusercontent.com/Novfensec/KvDeveloper-Client/master/assets/kvdeveloperclient.jpg)]
+
+![KvDeveloper Client](https://raw.githubusercontent.com/Novfensec/KvDeveloper-Client/master/assets/kvdeveloperclient.jpg)
 
 **KvDeveloper Client** is your mobile companion for hot-reloading **Kivy apps**—designed to give developers a lightning-fast preview and live-edit experience, directly on Mobile devices.
 
