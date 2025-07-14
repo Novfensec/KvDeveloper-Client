@@ -6,6 +6,8 @@
 
 <!-- GitAds-Verify: QCB8LYMU8FNAS8LP4OB1TWLG2R9OR182 -->
 
+## GitAds Sponsored
+[![Sponsored by GitAds](https://gitads.dev/v1/ad-serve?source=novfensec/kvdeveloper-client@github)](https://gitads.dev/v1/ad-track?source=novfensec/kvdeveloper-client@github)
 
 ## Overview
 
