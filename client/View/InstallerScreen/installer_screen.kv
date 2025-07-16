@@ -1,0 +1,71 @@
+<InstallerScreenView>:
+    CStackLayout:
+        size_hint: 1, 1
+        spacing: dp(16)
+        padding: dp(16)
+
+        CBoxLayout:
+            adaptive: [False, True]
+            spacing: dp(8)
+
+            CButtonGhost:
+                icon: "arrow--left"
+                role: "Large Productive"
+                on_press:
+                    app.referrer("home screen")
+
+            CLabel:
+                text: "Install Pip Packages"
+                style: "heading_03"
+                pos_hint: {'center_y': 0.5}
+
+        CBoxLayout:
+            orientation: "vertical"
+            adaptive: [False, True]
+            padding: [dp(16), 0]
+            spacing: dp(16)
+
+            CBoxLayout:
+                adaptive: [False, True]
+                padding: [0, dp(16)]
+
+                CTextInputLayout:
+
+                    CTextInputLabel:
+                        text: "Package name"
+
+                    CTextInput:
+                        id: PackageEntry
+                        hint_text: "watchdog"
+
+                    CTextInputHelperText:
+                        text: "Pure python packages only"
+
+            CButtonPrimary:
+                text: "Install"
+                role: "Large Productive"
+                on_press: 
+                    root.install_package(PackageEntry.text)
+
+            CLabel:
+                text: "Logs will appear below."
+                style: "body_compact_01"
+
+            CDivider:
+
+            LogRecycler:
+                id: Logger
+                viewclass: "LogLabel"
+
+                RecycleBoxLayout:
+                    orientation: "vertical"
+                    default_size_hint: 1, None
+                    default_size: None, None
+                    size_hint: 1, None
+                    height: self.minimum_height
+                    spacing: dp(16)
+
+
+<LogLabel@Label>:
+    status: "INFO"
+    color: app.text_primary

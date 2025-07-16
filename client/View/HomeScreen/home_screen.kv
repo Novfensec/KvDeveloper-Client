@@ -21,6 +21,12 @@
                 pos_hint: {'center_y': 0.5}
 
             CButtonGhost:
+                icon: "package"
+                role: "Large Productive"
+                on_press:
+                    app.referrer("installer screen")
+
+            CButtonGhost:
                 icon: "settings"
                 role: "Large Productive"
 
@@ -37,6 +43,7 @@
 
                 MainLayout:
                     id: MainLayout
+                    screen: root
                     orientation: 'vertical'
                     adaptive: [False, True]
                     padding: dp(16)
@@ -44,6 +51,7 @@
 
 
 <MainLayout@CBoxLayout>:
+    screen: None
 
     CBoxLayout:
         adaptive: [False, True]
@@ -60,6 +68,8 @@
         CButtonGhost:
             icon: "help"
             role: "Large Productive"
+            on_press:
+                root.screen.notify_info()
 
     CDivider:
 

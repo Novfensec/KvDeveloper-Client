@@ -2,21 +2,26 @@ from __future__ import annotations
 
 __all__ = ("ApplicationLauncher",)
 
-import os, sys, shutil, threading, subprocess # nosec
+import os, sys, shutil, threading, subprocess  # nosec
 import requests
 
 from kivy.app import App
 from kivy.clock import mainthread
 from kivy.core.window import Window
 from kivy.event import EventDispatcher
-from kivy.properties import StringProperty
+from kivy.properties import StringProperty, ListProperty
 from kivy.utils import platform
 
 from carbonkivy.behaviors import DeclarativeBehavior
 from View.base_screen import LoadingLayout
 
 if platform == "android":
-    from libs.launcher.android import AppStorageDir, launch_client_activity, finish_client_activity
+    from libs.launcher.android import (
+        AppStorageDir,
+        launch_client_activity,
+        finish_client_activity,
+    )
+
 
 class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
 
@@ -30,6 +35,8 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
 
     status = StringProperty()
 
+    allowed_extensions = ListProperty()
+
     def __init__(self, **kwargs) -> None:
         super(ApplicationLauncher, self).__init__(**kwargs)
         self.process = None
@@ -37,8 +44,8 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
         self.loading_layout = LoadingLayout()
         if platform == "android":
             self.target_dir = os.path.join(AppStorageDir, self.app_name)
-        else:    
-            self.target_dir = os.path.expanduser(f"~/Applications/{self.app_name}")
+        else:
+            self.target_dir = os.path.expanduser(f"~/Client/Applications/{self.app_name}")
 
     def launch_app(self, *args) -> None:
         self.app.status = "Starting launch operations.."
@@ -52,8 +59,8 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
             os.makedirs(self.target_dir, exist_ok=True)
 
             self.app.status = f"Downloading files from server at {self.server_url}"
-            
-            files_to_fetch = [self.entrypoint] + self.fetch_kv_files()
+
+            files_to_fetch = [self.entrypoint] + self.fetch_files()
             for filename in files_to_fetch:
                 self.download_file_from_server(filename)
 
@@ -63,19 +70,21 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
         except Exception as e:
             self.app.status = f"Error: {e}"
 
-    def fetch_kv_files(self) -> list | None:
-        kv_files = []
+    def fetch_files(self) -> list | None:
+        files = []
         try:
             response = requests.get(f"{self.server_url}/", timeout=3)
             for line in response.text.splitlines():
-                if '.kv' in line:
-                    parts = line.split('"')
-                    for part in parts:
-                        if part.endswith('.kv') and part not in kv_files:
-                            kv_files.append(part)
-        except Exception: # nosec
+                parts = line.split('"')
+                for part in parts:
+                    if (
+                        any(part.endswith(ext) for ext in self.allowed_extensions)
+                        and part not in files
+                    ):
+                        files.append(part)
+        except Exception:  # nosec
             pass
-        return kv_files
+        return files
 
     def download_file_from_server(self, filename: str) -> None:
         url = f"{self.server_url}/{filename}"
@@ -96,6 +105,7 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
 
     def sync_loop(self) -> None:
         import time
+
         while True:
             try:
                 r = requests.get(f"{self.server_url}/changes.json", timeout=3)
@@ -108,26 +118,30 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
             except Exception as e:
                 print(f"[SYNC ERROR] {e}")
             time.sleep(3.0)  # Poll interval
-            if (self.process and (self.process.poll() != None)) or (App.get_running_app().running == False):
+            if (self.process and (self.process.poll() != None)) or (
+                App.get_running_app().running == False
+            ):
                 break
 
     def run_entrypoint(self) -> None:
-        entrypoint_path = os.path.abspath(os.path.join(self.target_dir, self.entrypoint))
+        entrypoint_path = os.path.abspath(
+            os.path.join(self.target_dir, self.entrypoint)
+        )
         self.display_indicator(False)
         try:
             if platform == "android":
                 launch_client_activity(entrypoint_path)
             else:
-                self.process = subprocess.Popen([sys.executable, entrypoint_path], cwd=self.target_dir) # nosec
+                self.process = subprocess.Popen(
+                    [sys.executable, entrypoint_path], cwd=self.target_dir
+                )  # nosec
                 print(f"[RUN] {self.entrypoint} launched...")
         except Exception as e:
             print(e)
             self.app.running = False
 
     def restart_entrypoint(self) -> None:
-        if platform == "android":
-            finish_client_activity()
-        else:
+        if platform == "windows":
             if self.process and self.process.poll() is None:
                 print("[RESTART] Killing previous process...")
                 self.process.terminate()
@@ -140,7 +154,7 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
         try:
             if val:
                 Window.add_widget(self.loading_layout)
-            elif val==False:
+            elif val == False:
                 Window.remove_widget(self.loading_layout)
         except Exception:
             return

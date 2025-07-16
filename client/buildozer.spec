@@ -1,4 +1,4 @@
-# This .spec config file tells Buildozer an app's requirements for being built.
+﻿# This .spec config file tells Buildozer an app's requirements for being built.
 #
 # It largely follows the syntax of an .ini file.
 # See the end of the file for more details and warnings about common mistakes.
@@ -145,11 +145,11 @@ android.minapi = 23
 android.accept_sdk_license = True
 
 # (str) Android entry point, default is ok for Kivy-based app
-#android.entrypoint = org.kivy.android.PythonActivity
+android.entrypoint = org.kvdeveloper.client.ApplicationActivity
 
 # (str) Full name including package path of the Java class that implements Android Activity
 # use that parameter together with android.entrypoint to set custom Java class instead of PythonActivity
-#android.activity_class_name = org.kivy.android.PythonActivity
+android.activity_class_name = org.kvdeveloper.client.ApplicationActivity
 
 # (str) Extra xml to write directly inside the <manifest> element of AndroidManifest.xml
 # use that parameter to provide a filename from where to load your custom XML code:
@@ -186,7 +186,7 @@ android.home_app = True
 # their classes. Don't add jars that you do not need, since extra jars can slow
 # down the build process. Allows wildcards matching, for example:
 # OUYA-ODK/libs/*.jar
-#android.add_jars = foo.jar,bar.jar,path/to/more/*.jar
+android.add_jars = ./android/jars/*.jar
 
 # (list) List of Java files to add to the android project (can be java or a
 # directory containing the files)

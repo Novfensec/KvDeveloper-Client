@@ -1,9 +1,10 @@
-import os, ssl
+import os, ssl, requests
 
 ssl.create_default_context = ssl._create_unverified_context
 
 from kivy.core.window import Window
 from kivy.clock import Clock
+
 
 def set_softinput(*args) -> None:
     Window.keyboard_anim_args = {"d": 0.2, "t": "in_out_expo"}
@@ -18,6 +19,7 @@ from carbonkivy.app import CarbonApp
 from carbonkivy.uix.screenmanager import CScreenManager
 
 from libs.launcher import ApplicationLauncher
+from libs.utils import toml_parser
 
 
 class UI(CScreenManager):
@@ -60,14 +62,37 @@ class KvDeveloperClient(CarbonApp):
         self.running = False
         return super().on_resume()
 
+    def fetch_config(self, server_url: str, *args) -> None:
+        url = f"{server_url}/config.toml"
+        try:
+            r = requests.get(url, timeout=3)
+            r.raise_for_status()
+            config = toml_parser(r.text)
+            self.status = "[CONFIG] config.toml fetched successfully."
+        except Exception as e:
+            self.status = f"[ERROR] Failed to fetch or parse config.toml: {e}"
+            config = False
+        print(self.status)
+        return config
+
     def launch(self, server_url: str, *args) -> None:
-        self.launcher = ApplicationLauncher(server_url=server_url, entrypoint="main.py", app_name="Demo")
-        self.launcher.launch_app()
-        self.running = True
-        self.launcher = None
+        config = self.fetch_config(server_url=server_url)
+
+        if config := config:
+
+            self.launcher = ApplicationLauncher(
+                server_url=server_url,
+                entrypoint=config["app"]["entrypoint"],
+                app_name=config["app"]["app_name"],
+                allowed_extensions=config["app"]["include_exts"],
+            )
+            self.launcher.launch_app()
+            self.running = True
+            self.launcher = None
+        else:
+            self.status = f"[ERROR] Failed to launch application."
 
 
 if __name__ == "__main__":
     app = KvDeveloperClient()
     app.run()
-

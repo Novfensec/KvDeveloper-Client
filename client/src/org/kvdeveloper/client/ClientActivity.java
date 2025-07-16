@@ -5,9 +5,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 
-import org.kivy.android.PythonActivity;
+import org.kvdeveloper.client.ApplicationActivity;
 
-public class ClientActivity extends PythonActivity {
+public class ClientActivity extends ApplicationActivity {
     private static final String TAG = "ClientActivity";
 
     @Override
