@@ -104,13 +104,13 @@ android.presplash_color = #000000
 
 # (list) Permissions
 # (See https://python-for-android.readthedocs.io/en/latest/buildoptions.html for all the supported syntaxes and properties)
-android.permissions = android.permission.INTERNET, android.permission.ACCESS_NETWORK_STATE, android.permission.WAVE_LOCK
+android.permissions = android.permission.INTERNET, android.permission.ACCESS_NETWORK_STATE, android.permission.WAVE_LOCK, android.permission.MANAGE_EXTERNAL_STORAGE, android.permission.READ_EXTERNAL_STORAGE, android.permission.WRITE_EXTERNAL_STORAGE
 
 # (list) features (adds uses-feature -tags to manifest)
 #android.features = android.hardware.usb.host
 
 # (int) Target Android API, should be as high as possible.
-android.api = 36
+android.api = 34
 
 # (int) Minimum API your APK / AAB will support.
 android.minapi = 23
