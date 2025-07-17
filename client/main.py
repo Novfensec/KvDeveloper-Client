@@ -60,9 +60,10 @@ class KvDeveloperClient(CarbonApp):
 
     def on_resume(self):
         self.running = False
+        self.status = ""
         return super().on_resume()
 
-    def fetch_config(self, server_url: str, *args) -> None:
+    def fetch_config(self, server_url: str, *args) -> dict | bool:
         url = f"{server_url}/config.toml"
         try:
             r = requests.get(url, timeout=3)
