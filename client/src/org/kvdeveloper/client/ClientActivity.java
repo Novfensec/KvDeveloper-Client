@@ -21,7 +21,7 @@ public class ClientActivity extends PythonActivity {
         Uri uri = getIntent().getData();
         if (uri != null) {
             String path = uri.getPath();
-            Log.i(TAG, "Launching entrypoint from URI: " + path);
+            Log.i(TAG, "Will launch entrypoint from URI: " + path);
             return path;
         } else {
             Log.w(TAG, "No entrypoint URI passed.");
