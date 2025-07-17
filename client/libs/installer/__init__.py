@@ -12,7 +12,7 @@ if platform == "android":
 
     PythonActivity = autoclass("org.kivy.android.PythonActivity")
 
-    install_dir = os.path.join(PythonActivity.getFilesDir().getAbsolutePath(), "Applications", "site-packages")
+    install_dir = os.path.join(PythonActivity.mActivity.getFilesDir().getAbsolutePath(), "Applications", "site-packages")
 
 else:
     install_dir = os.path.expanduser("~/Applications/site-packages")
