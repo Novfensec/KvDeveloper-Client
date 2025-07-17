@@ -15,6 +15,5 @@ public class ApplicationActivity extends PythonActivity {
         String install_dir = getFilesDir().getAbsolutePath() + "/Applications/site-packages";
         Log.i(TAG, "ApplicationActivity started, USER_SITE_PACKAGES=" + install_dir);
 
-        PythonActivity.nativeSetenv("USER_SITE_PACKAGES", install_dir);
     }
 }
