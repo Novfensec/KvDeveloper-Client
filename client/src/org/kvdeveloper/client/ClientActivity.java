@@ -7,7 +7,7 @@ import android.view.KeyEvent;
 
 import org.kvdeveloper.client.ApplicationActivity;
 
-public class ClientActivity extends ApplicationActivity {
+public class ClientActivity extends PythonActivity {
     private static final String TAG = "ClientActivity";
 
     @Override
