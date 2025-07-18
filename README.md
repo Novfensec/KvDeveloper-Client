@@ -35,10 +35,22 @@ Whether you're tweaking UI layouts or debugging logic, this workflow keeps you m
 ## Installation & Usage
 
 ### Server (Desktop)
-Run below commandin root directory of your app.
+Run below command in the root directory of your app.
 ```bash
-pip install kvdeveloper
+pip install https://github.com/Novfensec/KvDeveloper/archive/master.zip
 kvdeveloper serve
+```
+
+### [Important]
+Add below line before starting your application.
+```python
+if __name__ == "__main":
+  from pathlib import Path
+  from kivy.resources import resource_add_path
+
+  resource_add_path(Path(__file__).parent)
+
+  myapp().run()
 ```
 
 ### Client (Mobile)
