@@ -16,6 +16,7 @@ Window.on_restore(Clock.schedule_once(set_softinput, 0.1))
 from kivy.properties import StringProperty, BooleanProperty
 
 from carbonkivy.app import CarbonApp
+from carbonkivy.uix.notification import CNotificationToast
 from carbonkivy.uix.screenmanager import CScreenManager
 
 from libs.launcher import ApplicationLauncher
@@ -76,10 +77,17 @@ class KvDeveloperClient(CarbonApp):
         print(self.status)
         return config
 
+    def notify(self, title: str, subtitle: str, status: str, *args) -> None:
+        self.notification = CNotificationToast(
+            title=title,
+            status=status,
+            subtitle=subtitle,
+        ).open()
+
     def launch(self, server_url: str, *args) -> None:
         config = self.fetch_config(server_url=server_url)
 
-        if config := config:
+        if config:
 
             self.launcher = ApplicationLauncher(
                 server_url=server_url,
@@ -92,7 +100,7 @@ class KvDeveloperClient(CarbonApp):
             self.launcher = None
         else:
             self.status = f"[ERROR] Failed to launch application."
-
+            self.notify(title="Launch failed", subtitle="[ERROR] Failed to fetch application configurations via config.toml. See adb logs for more details.", status="Error")
 
 if __name__ == "__main__":
     app = KvDeveloperClient()

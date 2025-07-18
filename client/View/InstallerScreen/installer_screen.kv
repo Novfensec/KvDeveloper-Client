@@ -2,7 +2,7 @@
     CStackLayout:
         size_hint: 1, 1
         spacing: dp(16)
-        padding: dp(16)
+        padding: dp(8)
 
         CBoxLayout:
             adaptive: [False, True]
@@ -22,8 +22,8 @@
         CBoxLayout:
             orientation: "vertical"
             adaptive: [False, True]
-            padding: [dp(16), 0]
             spacing: dp(16)
+            padding: [dp(16), 0]
 
             CBoxLayout:
                 adaptive: [False, True]
@@ -45,7 +45,7 @@
                 text: "Install"
                 role: "Large Productive"
                 on_press: 
-                    root.install_package(PackageEntry.text)
+                    root.notify_info()
 
             CLabel:
                 text: "Logs will appear below."

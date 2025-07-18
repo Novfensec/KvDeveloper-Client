@@ -10,7 +10,7 @@ public class ApplicationActivity extends PythonActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);  // Always call super first
+        super.onCreate(savedInstanceState);
 
         String install_dir = getFilesDir().getAbsolutePath() + "/Applications/site-packages";
         Log.i(TAG, "ApplicationActivity started, USER_SITE_PACKAGES=" + install_dir);

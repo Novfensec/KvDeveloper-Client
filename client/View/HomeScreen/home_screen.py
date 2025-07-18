@@ -9,8 +9,8 @@ class HomeScreenView(BaseScreenView):
         super(HomeScreenView, self).__init__(*args, **kwargs)
 
     def notify_info(self, *args) -> None:
-        self.notification = CNotificationToast(
+        self.app.notify(
             title="Help",
             status="Info",
             subtitle="Make sure your device and your system are present in the same network.",
-        ).open()
+        )
