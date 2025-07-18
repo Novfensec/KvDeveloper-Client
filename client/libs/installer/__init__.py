@@ -10,9 +10,9 @@ if platform == "android":
     from jnius import autoclass
     from libs.utils import request_android_permissions, Permission
 
-    ApplicationActivity = autoclass("org.kvdeveloper.client.ApplicationActivity")
+    PythonActivity = autoclass("org.kivy.android.PythonActivity")
 
-    install_dir = ApplicationActivity.install_dir
+    install_dir = os.path.join(PythonActivity.mActivity.getFilesDir().getAbsolutePath(), "Applications", "site-packages")
 
 else:
     install_dir = os.path.expanduser("~/Applications/site-packages")

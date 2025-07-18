@@ -145,11 +145,11 @@ android.minapi = 23
 android.accept_sdk_license = True
 
 # (str) Android entry point, default is ok for Kivy-based app
-android.entrypoint = org.kvdeveloper.client.ApplicationActivity
+# android.entrypoint = org.kvdeveloper.client.ApplicationActivity
 
 # (str) Full name including package path of the Java class that implements Android Activity
 # use that parameter together with android.entrypoint to set custom Java class instead of PythonActivity
-android.activity_class_name = org.kvdeveloper.client.ApplicationActivity
+# android.activity_class_name = org.kvdeveloper.client.ApplicationActivity
 
 # (str) Extra xml to write directly inside the <manifest> element of AndroidManifest.xml
 # use that parameter to provide a filename from where to load your custom XML code:

@@ -2,7 +2,7 @@ import os
 from jnius import autoclass
 from android.runnable import run_on_ui_thread  # type: ignore
 
-ApplicationActivity = autoclass("org.kvdeveloper.client.ApplicationActivity")
+ApplicationActivity = autoclass("org.kivy.android.PythonActivity")
 ClientActivity = autoclass("org.kvdeveloper.client.ClientActivity")
 Intent = autoclass("android.content.Intent")
 Uri = autoclass("android.net.Uri")
