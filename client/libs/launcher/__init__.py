@@ -10,7 +10,6 @@ from kivy.clock import mainthread
 from kivy.core.window import Window
 from kivy.event import EventDispatcher
 from kivy.properties import StringProperty, ListProperty
-from kivy.resources import resource_paths, resource_add_path
 from kivy.utils import platform
 
 from carbonkivy.behaviors import DeclarativeBehavior
@@ -46,8 +45,6 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
             self.target_dir = os.path.join(AppStorageDir, self.app_name)
         else:
             self.target_dir = os.path.expanduser(f"~/Client/Applications/{self.app_name}")
-        if not self.target_dir in resource_paths:
-            resource_add_path(self.target_dir)
 
     def launch_app(self, *args) -> None:
         self.app.status = "Starting launch operations.."
