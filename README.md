@@ -54,6 +54,8 @@ if __name__ == "__main":
 ```
 
 ### Client (Mobile)
+Download and extract debuggable package zip from `binaries` folder, and then install the application.
+
 1. Launch KvDeveloper Client on your Android device.
 2. Scan the QR code or enter the server URL manually.
 3. Your app loads instantly—with live updates as you edit files.
