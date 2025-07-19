@@ -42,7 +42,7 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3, kivy==2.3.0, https://github.com/CarbonKivy/CarbonKivy/archive/master.zip, android, requests, pyjnius, kaki, watchdog
+requirements = python3, kivy==2.3.0, https://github.com/CarbonKivy/CarbonKivy/archive/master.zip, android, requests, pyjnius, kaki, watchdog, pygments
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes

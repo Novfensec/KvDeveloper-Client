@@ -41,16 +41,15 @@ pip install https://github.com/Novfensec/KvDeveloper/archive/master.zip
 kvdeveloper serve
 ```
 
-### [Important]
-Add below line before starting your application.
+### `[Important]`
+Add below lines at the top of your entrypoint file `normally main.py`:
+
 ```python
-if __name__ == "__main":
-  from pathlib import Path
-  from kivy.resources import resource_add_path
+import os, sys
+from kivy.resources import resource_add_path
 
-  resource_add_path(Path(__file__).parent)
-
-  myapp().run()
+sys.path.append(os.path.dirname(__file__))
+resource_add_path(os.path.dirname(__file__))
 ```
 
 ### Client (Mobile)
