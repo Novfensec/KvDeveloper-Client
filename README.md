@@ -53,7 +53,7 @@ resource_add_path(os.path.dirname(__file__))
 ```
 
 ### Client (Mobile)
-Download and extract debuggable package.zip from the latest workflow run **OR** old packages from `binaries` folder, and then install the application.
+Download and extract debuggable package.zip from the [latest workflow run](https://github.com/Novfensec/KvDeveloper-Client/actions/workflows/buildozer_android_action.yml) **OR** old packages from `binaries` folder, and then install the application.
 
 1. Launch KvDeveloper Client on your Android device.
 2. Scan the QR code or enter the server URL manually.
