@@ -4,6 +4,8 @@
 [![Made with Python](https://img.shields.io/badge/Made%20with-Python-blue.svg)](https://www.python.org/)
 [![KvDeveloper Project](https://img.shields.io/badge/Part%20of-KvDeveloper%20Project-blueviolet.svg)](https://github.com/Novfensec/KvDeveloper)
 
+Instantly load your app on mobile via QR code or Server URL. Experience blazing-fast Kivy app previews on Android with KvDeveloper Client, It’s the Expo Go for Python devs—hot reload without the hassle.
+
 <!-- GitAds-Verify: QCB8LYMU8FNAS8LP4OB1TWLG2R9OR182 -->
 
 ## GitAds Sponsored
