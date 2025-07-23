@@ -214,7 +214,8 @@ android.add_src = ./src
 #android.add_resources =
 
 # (list) Gradle dependencies to add
-android.gradle_dependencies = com.journeyapps:zxing-android-embedded:4.3.0, com.google.zxing:core:3.3.0, androidx.appcompat:appcompat:1.4.0, androidx.core:core-ktx:1.7.0, androidx.multidex:multidex:2.0.1,
+android.gradle_dependencies = com.journeyapps:zxing-android-embedded:4.3.0, com.google.zxing:core:3.3.0, androidx.appcompat:appcompat:1.4.0, androidx.core:core-ktx:1.7.0
+
 
 # (bool) Enable AndroidX support. Enable when 'android.gradle_dependencies'
 # contains an 'androidx' package, or any package from Kotlin source.
