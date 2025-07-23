@@ -239,7 +239,7 @@ android.add_src = ./src
 #android.add_packaging_options =
 
 # (list) Java classes to add as activities to the manifest.
-#android.add_activities = Using a custom p4a fork.
+android.add_activities = org.kvdeveloper.client.QRScannerActivity
 
 # (str) OUYA Console category. Should be one of GAME or APP
 # If you leave this blank, OUYA support will not be enabled

@@ -3,7 +3,8 @@ import os, ssl, requests
 ssl.create_default_context = ssl._create_unverified_context
 
 from kivy.core.window import Window
-from kivy.clock import Clock
+from kivy.clock import Clock, mainthread
+from kivy.utils import platform
 
 
 def set_softinput(*args) -> None:
@@ -20,6 +21,7 @@ from carbonkivy.uix.notification import CNotificationToast
 from carbonkivy.uix.screenmanager import CScreenManager
 
 from libs.launcher import ApplicationLauncher
+from libs.scanner import scan_qr_and_get_url
 from libs.utils import toml_parser
 
 
@@ -64,6 +66,10 @@ class KvDeveloperClient(CarbonApp):
         self.status = ""
         return super().on_resume()
 
+    def start_scan(self, *args) -> None:
+        if platform == "android":
+            scan_qr_and_get_url(self.launch)
+
     def fetch_config(self, server_url: str, *args) -> dict | bool:
         url = f"{server_url}/config.toml"
         try:
@@ -77,6 +83,7 @@ class KvDeveloperClient(CarbonApp):
         print(self.status)
         return config
 
+    @mainthread
     def notify(self, title: str, subtitle: str, status: str, *args) -> None:
         self.notification = CNotificationToast(
             title=title,

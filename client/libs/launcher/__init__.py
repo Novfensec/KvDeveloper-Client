@@ -4,6 +4,8 @@ __all__ = ("ApplicationLauncher",)
 
 import os, sys, shutil, threading, subprocess  # nosec
 import requests
+from html.parser import HTMLParser
+from urllib.parse import urljoin
 
 from kivy.app import App
 from kivy.clock import mainthread
@@ -20,6 +22,18 @@ if platform == "android":
         AppStorageDir,
         launch_client_activity,
     )
+
+
+class LinkExtractor(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__()
+        self.links = []
+
+    def handle_starttag(self, tag, attrs) -> None:
+        if tag == 'a':
+            for attr, value in attrs:
+                if attr == 'href':
+                    self.links.append(value)
 
 
 class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
@@ -69,21 +83,66 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
         except Exception as e:
             self.app.status = f"Error: {e}"
 
-    def fetch_files(self) -> list | None:
+    def fetch_files(self, url: str = None, seen: set = None) -> list:
+        """
+        Recursively fetches all allowed files from the server using only built-in modules,
+        skipping disallowed patterns like __pycache__/, *.pyc, *.pyo, etc.
+        """
+        if seen is None:
+            seen = set()
+        if url is None:
+            url = self.server_url.rstrip('/') + '/'
+
         files = []
+
         try:
-            response = requests.get(f"{self.server_url}/", timeout=3)
-            for line in response.text.splitlines():
-                parts = line.split('"')
-                for part in parts:
-                    if (
-                        any(part.endswith(ext) for ext in self.allowed_extensions)
-                        and part not in files
-                    ):
-                        files.append(part)
-        except Exception:  # nosec
-            pass
+            response = requests.get(url, timeout=3)
+            response.raise_for_status()
+            parser = LinkExtractor()
+            parser.feed(response.text)
+
+            for href in parser.links:
+                if not href or href == "../":
+                    continue  # Skip parent links
+
+                # Skip unwanted patterns
+                if (
+                    href.startswith("__pycache__/")
+                    or href.endswith((".pyc", ".pyo", ".pyd"))
+                ):
+                    continue
+
+                full_url = urljoin(url, href)
+                if full_url in seen:
+                    continue
+                seen.add(full_url)
+
+                if any(href.lower().endswith(ext.lower()) for ext in self.allowed_extensions):
+                    # Get relative path for correct download location
+                    relative_path = full_url.replace(self.server_url.rstrip("/") + "/", "")
+                    files.append(relative_path)
+                elif href.endswith('/'):  # A subdirectory
+                    files.extend(self.fetch_files(full_url, seen))
+        except Exception as e:
+            print(f"[FETCH ERROR] {e}")
+
         return files
+
+    # def fetch_files(self) -> list | None:
+    #     files = []
+    #     try:
+    #         response = requests.get(f"{self.server_url}/", timeout=3)
+    #         for line in response.text.splitlines():
+    #             parts = line.split('"')
+    #             for part in parts:
+    #                 if (
+    #                     any(part.endswith(ext) for ext in self.allowed_extensions)
+    #                     and part not in files
+    #                 ):
+    #                     files.append(part)
+    #     except Exception:  # nosec
+    #         pass
+    #     return files
 
     def download_file_from_server(self, filename: str) -> None:
         url = f"{self.server_url}/{filename}"
@@ -97,7 +156,6 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
             print(f"[SYNC] Downloaded {filename} at {local_path}")
         except Exception as e:
             print(f"[ERROR] Failed to download {filename}: {e}")
-        self.start_auto_sync()
 
     def start_auto_sync(self) -> None:
         threading.Thread(target=self.sync_loop, daemon=True).start()
@@ -127,6 +185,7 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
             os.path.join(self.target_dir, self.entrypoint)
         )
         self.display_indicator(False)
+        self.start_auto_sync()
         try:
             if platform == "android":
                 launch_client_activity(entrypoint_path)
