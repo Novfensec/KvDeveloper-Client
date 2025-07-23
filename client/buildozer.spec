@@ -186,7 +186,7 @@ android.home_app = True
 # their classes. Don't add jars that you do not need, since extra jars can slow
 # down the build process. Allows wildcards matching, for example:
 # OUYA-ODK/libs/*.jar
-android.add_jars = ./android/jars/*.jar
+# android.add_jars = ./android/jars/*.jar
 
 # (list) List of Java files to add to the android project (can be java or a
 # directory containing the files)
