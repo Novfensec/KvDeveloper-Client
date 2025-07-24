@@ -231,7 +231,6 @@ android.enable_androidx = True
 # e.g. android.gradle_repositories = "maven { url 'https://repo.spring.io/release' }"
 android.add_gradle_repositories = "maven { url 'https://maven.google.com' }", "mavenCentral()"
 
-
 # (list) packaging options to add
 # see https://developer.android.com/reference/tools/gradle-api/7.1/com/android/build/api/dsl/PackagingOptions
 # can be necessary to solve conflicts in gradle_dependencies
