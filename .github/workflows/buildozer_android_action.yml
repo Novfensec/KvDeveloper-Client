@@ -133,3 +133,4 @@ jobs:
           path: |
             client/bin/*.apk
             client/bin/*.aab
+          retention-days: 2
