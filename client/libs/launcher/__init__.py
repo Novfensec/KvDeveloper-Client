@@ -134,22 +134,6 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
 
         return files
 
-    # def fetch_files(self) -> list | None:
-    #     files = []
-    #     try:
-    #         response = requests.get(f"{self.server_url}/", timeout=3)
-    #         for line in response.text.splitlines():
-    #             parts = line.split('"')
-    #             for part in parts:
-    #                 if (
-    #                     any(part.endswith(ext) for ext in self.allowed_extensions)
-    #                     and part not in files
-    #                 ):
-    #                     files.append(part)
-    #     except Exception:  # nosec
-    #         pass
-    #     return files
-
     def download_file_from_server(self, filename: str) -> None:
         url = f"{self.server_url}/{filename}"
         local_path = os.path.join(self.target_dir, filename)
