@@ -113,7 +113,7 @@ android.permissions = android.permission.INTERNET, android.permission.ACCESS_NET
 android.api = 34
 
 # (int) Minimum API your APK / AAB will support.
-android.minapi = 23
+android.minapi = 28
 
 # (int) Android SDK version to use
 #android.sdk = 20
@@ -186,7 +186,7 @@ android.home_app = True
 # their classes. Don't add jars that you do not need, since extra jars can slow
 # down the build process. Allows wildcards matching, for example:
 # OUYA-ODK/libs/*.jar
-android.add_jars = ./android/jars/*.jar
+# android.add_jars = ./android/jars/*.jar
 
 # (list) List of Java files to add to the android project (can be java or a
 # directory containing the files)
@@ -214,12 +214,13 @@ android.add_src = ./src
 #android.add_resources =
 
 # (list) Gradle dependencies to add
-#android.gradle_dependencies =
+android.gradle_dependencies = com.journeyapps:zxing-android-embedded:4.3.0, com.google.zxing:core:3.3.0, androidx.appcompat:appcompat:1.4.0, androidx.core:core-ktx:1.7.0
+
 
 # (bool) Enable AndroidX support. Enable when 'android.gradle_dependencies'
 # contains an 'androidx' package, or any package from Kotlin source.
 # android.enable_androidx requires android.api >= 28
-#android.enable_androidx = True
+android.enable_androidx = True
 
 # (list) add java compile options
 # this can for example be necessary when importing certain java libraries using the 'android.gradle_dependencies' option
@@ -239,7 +240,7 @@ android.add_src = ./src
 #android.add_packaging_options =
 
 # (list) Java classes to add as activities to the manifest.
-android.add_activities = org.kvdeveloper.client.QRScannerActivity
+# android.add_activities = Using a custom fork of p4a
 
 # (str) OUYA Console category. Should be one of GAME or APP
 # If you leave this blank, OUYA support will not be enabled

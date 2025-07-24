@@ -7,12 +7,18 @@ import android.os.Bundle;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.util.Collections;
+import java.util.List;
+
 public class QRScannerActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        new IntentIntegrator(this).initiateScan();  // Start scanning
+
+        IntentIntegrator integrator = new IntentIntegrator(this);
+        integrator.setDesiredBarcodeFormats(Collections.singletonList(IntentIntegrator.QR_CODE));
+        integrator.initiateScan(); // start scanning
     }
 
     @Override
