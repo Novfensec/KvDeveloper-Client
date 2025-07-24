@@ -240,7 +240,7 @@ android.enable_androidx = True
 #android.add_packaging_options =
 
 # (list) Java classes to add as activities to the manifest.
-android.add_activities = org.kvdeveloper.client.QRScannerActivity
+# android.add_activities = Using a custom fork of p4a
 
 # (str) OUYA Console category. Should be one of GAME or APP
 # If you leave this blank, OUYA support will not be enabled
