@@ -48,7 +48,7 @@ Add below lines at the top of your entrypoint file `normally main.py`:
 import os, sys
 from kivy.resources import resource_add_path
 
-sys.path.append(os.path.dirname(__file__))
+sys.path.insert(0, os.path.dirname(__file__))
 resource_add_path(os.path.dirname(__file__))
 ```
 
