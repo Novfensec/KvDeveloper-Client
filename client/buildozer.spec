@@ -34,7 +34,7 @@ source.include_patterns = assets/*, assets/images/*.png, assets/images/*.jpg
 #source.exclude_patterns = license,images/*/*.jpg
 
 # (str) Application versioning (method 1)
-version = 0.1
+version = 0.2
 
 # (str) Application versioning (method 2)
 # version.regex = __version__ = ['"](.*)['"]
@@ -214,8 +214,7 @@ android.add_src = ./src
 #android.add_resources =
 
 # (list) Gradle dependencies to add
-android.gradle_dependencies = com.journeyapps:zxing-android-embedded:4.3.0, com.google.zxing:core:3.3.0, androidx.appcompat:appcompat:1.4.0, androidx.core:core-ktx:1.7.0
-
+android.gradle_dependencies = com.google.mlkit:barcode-scanning:17.2.0, androidx.camera:camera-core:1.1.0, androidx.camera:camera-camera2:1.1.0, androidx.camera:camera-lifecycle:1.1.0, androidx.camera:camera-view:1.0.0-alpha31, androidx.appcompat:appcompat:1.6.1, androidx.constraintlayout:constraintlayout:2.1.4
 
 # (bool) Enable AndroidX support. Enable when 'android.gradle_dependencies'
 # contains an 'androidx' package, or any package from Kotlin source.
