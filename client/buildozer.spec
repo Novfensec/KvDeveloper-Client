@@ -273,7 +273,7 @@ android.manifest.launch_mode = standard
 android.wakelock = True
 
 # (list) Android application meta-data to set (key=value format)
-#android.meta_data =
+android.meta_data = com.google.mlkit.vision.DEPENDENCIES=barcode
 
 # (list) Android library project to add (will be added in the
 # project.properties automatically.)
