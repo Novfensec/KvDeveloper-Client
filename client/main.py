@@ -107,7 +107,12 @@ class KvDeveloperClient(CarbonApp):
             self.launcher = None
         else:
             self.status = f"[ERROR] Failed to launch application."
-            self.notify(title="Launch failed", subtitle="[ERROR] Failed to fetch application configurations via config.toml. See adb logs for more details.", status="Error")
+            self.notify(
+                title="Launch failed",
+                subtitle="[ERROR] Failed to fetch application configurations via config.toml. See adb logs for more details.",
+                status="Error",
+            )
+
 
 if __name__ == "__main__":
     app = KvDeveloperClient()

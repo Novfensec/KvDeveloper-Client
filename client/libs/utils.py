@@ -13,6 +13,7 @@ if platform == "android":
 
     from android.permissions import request_permissions, Permission  # type: ignore
 
+
 def toml_parser(source_config: str) -> dict:
     parsed_config = toml_loader.loads(source_config)
     return parsed_config

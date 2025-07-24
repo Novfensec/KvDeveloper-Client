@@ -1,6 +1,6 @@
 import os, sys, pkg_resources
 
-import subprocess # nosec
+import subprocess  # nosec
 
 from kivy.app import App
 from kivy.utils import platform
@@ -12,7 +12,11 @@ if platform == "android":
 
     PythonActivity = autoclass("org.kivy.android.PythonActivity")
 
-    install_dir = os.path.join(PythonActivity.mActivity.getFilesDir().getAbsolutePath(), "Applications", "site-packages")
+    install_dir = os.path.join(
+        PythonActivity.mActivity.getFilesDir().getAbsolutePath(),
+        "Applications",
+        "site-packages",
+    )
 
 else:
     install_dir = os.path.expanduser("~/Applications/site-packages")
@@ -21,18 +25,21 @@ else:
 
 os.makedirs(install_dir, exist_ok=True)
 
-pre_installed_packages = [dist.project_name for dist in pkg_resources.working_set] + [dist.project_name for dist in list(pkg_resources.find_distributions(install_dir))]
-
+pre_installed_packages = [dist.project_name for dist in pkg_resources.working_set] + [
+    dist.project_name for dist in list(pkg_resources.find_distributions(install_dir))
+]
 
 
 def install(package_name: str) -> None:
 
     if platform == "android":
-        request_android_permissions([
-            Permission.MANAGE_EXTERNAL_STORAGE,
-            Permission.READ_EXTERNAL_STORAGE,
-            Permission.WRITE_EXTERNAL_STORAGE,
-        ])
+        request_android_permissions(
+            [
+                Permission.MANAGE_EXTERNAL_STORAGE,
+                Permission.READ_EXTERNAL_STORAGE,
+                Permission.WRITE_EXTERNAL_STORAGE,
+            ]
+        )
 
     if not package_name in pre_installed_packages:
         try:

@@ -19,4 +19,3 @@ def launch_client_activity(entrypoint_path: str) -> None:
     intent.setData(uri)
     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
     activity.startActivity(intent)
-

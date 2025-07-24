@@ -13,7 +13,9 @@ class InstallerScreenView(BaseScreenView):
 
     def install_package(self, package_name: str) -> None:
         try:
-            threading.Thread(target=lambda : install(package_name=package_name), daemon=True).start()
+            threading.Thread(
+                target=lambda: install(package_name=package_name), daemon=True
+            ).start()
 
         except Exception as e:
             self.ids.Logger.log(f"Error installing {package_name}: {e}")

@@ -15,7 +15,7 @@ class LogRecycler(RecycleView):
     def log(self, text: str, status: str = "INFO", *args) -> None:
         self.data.append({"text": text, "status": status})
         self.refresh_from_data()
-        
+
 
 class LoadingLayout(CLoadingLayout):
     pass

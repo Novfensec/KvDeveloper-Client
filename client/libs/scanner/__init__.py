@@ -1,7 +1,8 @@
 from jnius import autoclass, cast
-from android import activity # type: ignore
+from android import activity  # type: ignore
 from android.runnable import run_on_ui_thread  # type: ignore
 from typing import Callable, Optional
+
 
 @run_on_ui_thread
 def scan_qr_and_get_url(callback: Callable[[str], None]) -> None:
@@ -14,9 +15,11 @@ def scan_qr_and_get_url(callback: Callable[[str], None]) -> None:
     Intent = autoclass("android.content.Intent")
     QRScannerActivity = autoclass("org.kvdeveloper.client.QRScannerActivity")
 
-    activity.bind(on_activity_result=lambda req, res, intent: on_qr_result(intent, callback))
+    activity.bind(
+        on_activity_result=lambda req, res, intent: on_qr_result(intent, callback)
+    )
 
-    current_activity = cast('android.app.Activity', PythonActivity.mActivity)
+    current_activity = cast("android.app.Activity", PythonActivity.mActivity)
     intent = Intent(current_activity, QRScannerActivity)
     current_activity.startActivityForResult(intent, 1234)
 

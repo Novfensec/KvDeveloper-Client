@@ -30,9 +30,9 @@ class LinkExtractor(HTMLParser):
         self.links = []
 
     def handle_starttag(self, tag, attrs) -> None:
-        if tag == 'a':
+        if tag == "a":
             for attr, value in attrs:
-                if attr == 'href':
+                if attr == "href":
                     self.links.append(value)
 
 
@@ -58,7 +58,9 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
         if platform == "android":
             self.target_dir = os.path.join(AppStorageDir, self.app_name)
         else:
-            self.target_dir = os.path.expanduser(f"~/Client/Applications/{self.app_name}")
+            self.target_dir = os.path.expanduser(
+                f"~/Client/Applications/{self.app_name}"
+            )
 
     def launch_app(self, *args) -> None:
         self.app.status = "Starting launch operations.."
@@ -91,7 +93,7 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
         if seen is None:
             seen = set()
         if url is None:
-            url = self.server_url.rstrip('/') + '/'
+            url = self.server_url.rstrip("/") + "/"
 
         files = []
 
@@ -106,9 +108,8 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
                     continue  # Skip parent links
 
                 # Skip unwanted patterns
-                if (
-                    href.startswith("__pycache__/")
-                    or href.endswith((".pyc", ".pyo", ".pyd"))
+                if href.startswith("__pycache__/") or href.endswith(
+                    (".pyc", ".pyo", ".pyd")
                 ):
                     continue
 
@@ -117,11 +118,16 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
                     continue
                 seen.add(full_url)
 
-                if any(href.lower().endswith(ext.lower()) for ext in self.allowed_extensions):
+                if any(
+                    href.lower().endswith(ext.lower())
+                    for ext in self.allowed_extensions
+                ):
                     # Get relative path for correct download location
-                    relative_path = full_url.replace(self.server_url.rstrip("/") + "/", "")
+                    relative_path = full_url.replace(
+                        self.server_url.rstrip("/") + "/", ""
+                    )
                     files.append(relative_path)
-                elif href.endswith('/'):  # A subdirectory
+                elif href.endswith("/"):  # A subdirectory
                     files.extend(self.fetch_files(full_url, seen))
         except Exception as e:
             print(f"[FETCH ERROR] {e}")
@@ -202,7 +208,6 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
                 title="Error",
                 subtitle=f"{e}",
             )
-
 
     def restart_entrypoint(self) -> None:
         if platform == "windows":
