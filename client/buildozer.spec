@@ -214,7 +214,7 @@ android.add_src = ./src
 #android.add_resources =
 
 # (list) Gradle dependencies to add
-android.gradle_dependencies = com.google.mlkit:barcode-scanning:17.2.0, androidx.camera:camera-core:1.1.0, androidx.camera:camera-camera2:1.1.0, androidx.camera:camera-lifecycle:1.1.0, androidx.camera:camera-view:1.0.0-alpha31, androidx.appcompat:appcompat:1.6.1, androidx.constraintlayout:constraintlayout:2.1.4
+android.gradle_dependencies =  androidx.appcompat:appcompat:1.6.1
 
 # (bool) Enable AndroidX support. Enable when 'android.gradle_dependencies'
 # contains an 'androidx' package, or any package from Kotlin source.
@@ -229,7 +229,7 @@ android.enable_androidx = True
 # (list) Gradle repositories to add {can be necessary for some android.gradle_dependencies}
 # please enclose in double quotes 
 # e.g. android.gradle_repositories = "maven { url 'https://repo.spring.io/release' }"
-android.add_gradle_repositories = "maven { url 'https://maven.google.com' }", "mavenCentral()"
+# android.add_gradle_repositories = "maven { url 'https://maven.google.com' }", "mavenCentral()"
 
 # (list) packaging options to add
 # see https://developer.android.com/reference/tools/gradle-api/7.1/com/android/build/api/dsl/PackagingOptions
@@ -273,7 +273,7 @@ android.manifest.launch_mode = standard
 android.wakelock = True
 
 # (list) Android application meta-data to set (key=value format)
-android.meta_data = com.google.mlkit.vision.DEPENDENCIES=barcode
+# android.meta_data = com.google.mlkit.vision.DEPENDENCIES=barcode
 
 # (list) Android library project to add (will be added in the
 # project.properties automatically.)
