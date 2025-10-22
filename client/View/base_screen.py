@@ -10,11 +10,11 @@ class LogRecycler(RecycleView):
 
     def __init__(self, **kwargs):
         super(LogRecycler, self).__init__(**kwargs)
-        self.data = []
 
     def log(self, text: str, status: str = "INFO", *args) -> None:
-        self.data.append({"text": text, "status": status})
-        self.refresh_from_data()
+        self.data = [{
+            "text": text,
+        }]
 
 
 class LoadingLayout(CLoadingLayout):
@@ -32,7 +32,7 @@ class BaseScreenView(CScreen):
     """
 
     def __init__(self, *args, **kwargs):
+        self.app = App.get_running_app()
         super().__init__(*args, **kwargs)
         # Often you need to get access to the application object from the view
         # class. You can do this using this attribute.
-        self.app = App.get_running_app()

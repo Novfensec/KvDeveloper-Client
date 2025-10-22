@@ -45,7 +45,7 @@
                 text: "Install"
                 role: "Large Productive"
                 on_press: 
-                    root.notify_info()
+                    root.install_package(PackageEntry.text)
 
             CLabel:
                 text: "Logs will appear below."
@@ -55,17 +55,13 @@
 
             LogRecycler:
                 id: Logger
-                viewclass: "LogLabel"
+                viewclass: "CLabel"
 
                 RecycleBoxLayout:
                     orientation: "vertical"
-                    default_size_hint: 1, None
+                    default_size_hint: None, None
                     default_size: None, None
                     size_hint: 1, None
                     height: self.minimum_height
                     spacing: dp(16)
 
-
-<LogLabel@Label>:
-    status: "INFO"
-    color: app.text_primary

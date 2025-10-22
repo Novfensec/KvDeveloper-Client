@@ -14,12 +14,12 @@ if platform == "android":
 
     install_dir = os.path.join(
         PythonActivity.mActivity.getFilesDir().getAbsolutePath(),
-        "Applications",
+        "Python",
         "site-packages",
     )
 
 else:
-    install_dir = os.path.expanduser("~/Applications/site-packages")
+    install_dir = os.path.expanduser("~/Client/Python/site-packages")
     if not install_dir in sys.path:
         sys.path.append(install_dir)
 
@@ -47,7 +47,9 @@ def install(package_name: str) -> None:
             process = subprocess.Popen(  # nosec
                 f"{sys.executable} -m pip install {package_name} --target {install_dir} --no-deps",
             )
-        except Exception as e:
-            print(e)
+            process.communicate()
+            App.get_running_app().manager_screens.get_screen("installer screen").ids.Logger.log(f"{process.stdout}")
+        except ModuleNotFoundError as e:
+            print("Failed")
     else:
         print(f"[INSTALL] {package_name} already installed.")

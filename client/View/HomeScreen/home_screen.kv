@@ -34,12 +34,16 @@
 
             AsyncImage:
                 source: "assets/images/magicpattern.jpg"
-                size_hint: 1,1
+                size_hint: [1, 1]
                 fit_mode: "cover"
 
-            CScrollView:
-                always_overscroll: False
-                bg_color: [1, 1, 1, 0.9]
+            ScrollView:
+                canvas.before:
+                    Color:
+                        rgba: [1, 1, 1, 0.8]
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
 
                 MainLayout:
                     id: MainLayout
@@ -48,7 +52,6 @@
                     adaptive: [False, True]
                     padding: dp(16)
                     spacing: dp(16)
-
 
 <MainLayout@CBoxLayout>:
     screen: None
@@ -115,3 +118,50 @@
 
         CLinkIcon:
             icon: "arrow--up-right"
+
+    CDivider:
+
+    CBoxLayout:
+        adaptive: [False, True]
+        spacing: dp(8)
+
+        CIcon:
+            icon: "application"
+            pos_hint: {'center_y': 0.5}
+
+        CLabel:
+            text: "Recent servers"
+            pos_hint: {'center_y': 0.5}
+
+        CButtonDanger:
+            icon: "trash-can"
+            role: "Large Productive"
+            variant: "Ghost"
+            on_press:
+                app.clean_apps()
+
+    CGridLayout:
+        id: ServersList
+        cols: 1
+        max_cols: 4
+        min_cols: 1
+        spacing: dp(16)
+        responsive: True
+        adaptive: [False, True]
+
+
+<ServerTile>:
+    orientation: "vertical"
+    adaptive: [False, True]
+    padding: dp(16)
+    spacing: dp(16)
+    bg_color: app.background_selected_hover
+
+    CLabel:
+        text: root.name
+
+    UIShellButton:
+        icon: "play"
+        on_press:
+            app.launch(root.name)
+

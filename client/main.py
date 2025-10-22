@@ -1,4 +1,4 @@
-import os, ssl, requests
+import os, ssl, requests, json
 
 ssl.create_default_context = ssl._create_unverified_context
 
@@ -21,7 +21,6 @@ from carbonkivy.uix.notification import CNotificationToast
 from carbonkivy.uix.screenmanager import CScreenManager
 
 from libs.launcher import ApplicationLauncher
-from libs.scanner import scan_qr_and_get_url
 from libs.utils import toml_parser
 
 
@@ -39,6 +38,7 @@ class KvDeveloperClient(CarbonApp):
     def __init__(self, *args, **kwargs) -> None:
         super(KvDeveloperClient, self).__init__(*args, **kwargs)
         self.load_all_kv_files(os.path.join(self.directory, "View"))
+        self.launcher = ApplicationLauncher()
 
     def build(self) -> UI:
         self.manager_screens = UI()
@@ -67,8 +67,9 @@ class KvDeveloperClient(CarbonApp):
         return super().on_resume()
 
     def start_scan(self, *args) -> None:
-        # if platform == "android":
-        #     scan_qr_and_get_url(self.launch)
+        if platform == "android":
+            from libs.scanner import scan_qr_and_get_url
+            scan_qr_and_get_url(self.launch)
         pass
 
     def fetch_config(self, server_url: str, *args) -> dict | bool:
@@ -93,6 +94,14 @@ class KvDeveloperClient(CarbonApp):
         ).open()
 
     def launch(self, server_url: str, *args) -> None:
+        with open(os.path.join(self.directory, "servers.json"), "r", encoding="utf-8") as servers_file:
+            content = json.loads(servers_file.read())
+
+        if not server_url in content["servers"]:
+            content["servers"].extend([f"{server_url}"])
+            with open(os.path.join(self.directory, "servers.json"), "w", encoding="utf-8") as servers_file:
+                servers_file.write(json.dumps(content))
+
         config = self.fetch_config(server_url=server_url)
 
         if config:
@@ -102,6 +111,9 @@ class KvDeveloperClient(CarbonApp):
                 entrypoint=config["app"]["entrypoint"],
                 app_name=config["app"]["app_name"],
                 allowed_extensions=config["app"]["include_exts"],
+                noreload_files=config["app"]["noreload_files"],
+                ignore_dirs=config["app"]["ignore_dirs"],
+                ignore_files=config["app"]["ignore_files"],
             )
             self.launcher.launch_app()
             self.running = True
@@ -114,6 +126,12 @@ class KvDeveloperClient(CarbonApp):
                 status="Error",
             )
 
+    def clean_apps(self, *args) -> None:
+        import shutil
+        try:
+            shutil.rmtree(os.path.abspath(self.launcher.target_dir))
+        except FileNotFoundError:
+            self.notify("Not found", "AppStorageDir is already empty.", status="Info")
 
 if __name__ == "__main__":
     app = KvDeveloperClient()

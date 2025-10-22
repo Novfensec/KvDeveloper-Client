@@ -8,7 +8,7 @@ from html.parser import HTMLParser
 from urllib.parse import urljoin
 
 from kivy.app import App
-from kivy.clock import mainthread
+from kivy.clock import mainthread, Clock
 from kivy.core.window import Window
 from kivy.event import EventDispatcher
 from kivy.properties import StringProperty, ListProperty
@@ -50,6 +50,12 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
 
     allowed_extensions = ListProperty()
 
+    ignore_dirs = ListProperty()
+
+    ignore_files = ListProperty()
+
+    noreload_files = ListProperty()
+
     def __init__(self, **kwargs) -> None:
         super(ApplicationLauncher, self).__init__(**kwargs)
         self.process = None
@@ -63,14 +69,12 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
             )
 
     def launch_app(self, *args) -> None:
+        Clock.schedule_once(self.display_indicator)
         self.app.status = "Starting launch operations.."
-        self.display_indicator()
         threading.Thread(target=self.download_and_run).start()
 
     def download_and_run(self, *args) -> None:
         try:
-            if os.path.exists(self.target_dir):
-                shutil.rmtree(self.target_dir)
             os.makedirs(self.target_dir, exist_ok=True)
 
             self.app.status = f"Downloading files from server at {self.server_url}"
@@ -136,7 +140,13 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
 
     def download_file_from_server(self, filename: str) -> None:
         url = f"{self.server_url}/{filename}"
+        if os.path.basename(filename) in self.ignore_files or os.path.dirname(filename) in self.ignore_dirs:
+            print(f"[SYNC] Ignoring {os.path.basename(filename)}")
+            return
         local_path = os.path.join(self.target_dir, filename)
+        if os.path.basename(filename) in self.noreload_files and os.path.exists(local_path):
+            print(f"[SYNC] Ignoring {os.path.basename(filename)}")
+            return
         os.makedirs(os.path.dirname(local_path), exist_ok=True)
         try:
             r = requests.get(url, timeout=3)

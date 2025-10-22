@@ -2,7 +2,6 @@ import threading
 
 from carbonkivy.uix.link import CLink, CLinkIcon, CLinkText
 
-from libs.installer import install
 from View.base_screen import BaseScreenView
 
 
@@ -12,13 +11,10 @@ class InstallerScreenView(BaseScreenView):
         super(InstallerScreenView, self).__init__(*args, **kwargs)
 
     def install_package(self, package_name: str) -> None:
-        try:
-            threading.Thread(
-                target=lambda: install(package_name=package_name), daemon=True
-            ).start()
-
-        except Exception as e:
-            self.ids.Logger.log(f"Error installing {package_name}: {e}")
+        from libs.installer import install
+        threading.Thread(
+            target=lambda: install(package_name=package_name), daemon=True
+        ).start()
 
     def notify_info(self, *args) -> None:
         self.app.notify(
