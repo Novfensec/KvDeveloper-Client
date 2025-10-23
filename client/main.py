@@ -136,6 +136,10 @@ class KvDeveloperClient(CarbonApp):
 
     def clean_apps(self, *args) -> None:
         import shutil
+        json_path = os.path.join(self.directory, "data", "servers.json")
+        if os.path.exists(json_path):
+            os.remove(json_path)
+        self.manager_screens.get_screen("home screen").fetch_saved()
         try:
             shutil.rmtree(os.path.abspath(self.launcher.target_dir))
         except FileNotFoundError:
