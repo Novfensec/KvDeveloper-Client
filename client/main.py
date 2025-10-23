@@ -125,7 +125,7 @@ class KvDeveloperClient(CarbonApp):
             )
             self.launcher.launch_app()
             self.running = True
-            self.launcher = None
+            self.launcher = ApplicationLauncher()
         else:
             self.status = f"[ERROR] Failed to launch application."
             self.notify(
