@@ -18,7 +18,7 @@ package.domain = org.novfensec.client
 source.dir = .
 
 # (list) Source files to include (leave empty to include all the files)
-source.include_exts = py,png,jpg,kv,atlas
+source.include_exts = py,png,jpg,kv,atlas,json
 
 # (list) List of inclusions using pattern matching
 source.include_patterns = assets/*, assets/images/*.png, assets/images/*.jpg
@@ -110,7 +110,7 @@ android.permissions = android.permission.INTERNET, android.permission.ACCESS_NET
 #android.features = android.hardware.usb.host
 
 # (int) Target Android API, should be as high as possible.
-android.api = 34
+android.api = 36
 
 # (int) Minimum API your APK / AAB will support.
 android.minapi = 28
@@ -119,7 +119,7 @@ android.minapi = 28
 #android.sdk = 20
 
 # (str) Android NDK version to use
-#android.ndk = 23b
+android.ndk = 28c
 
 # (int) Android NDK API to use. This is the minimum API your app will support, it should usually match android.minapi.
 #android.ndk_api = 21

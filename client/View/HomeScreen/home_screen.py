@@ -19,11 +19,19 @@ class HomeScreenView(BaseScreenView):
         super(HomeScreenView, self).__init__(*args, **kwargs)
 
     def on_kv_post(self, base_widget):
-        with open(os.path.join(self.app.directory, "servers.json"), "r", encoding="utf-8") as servers_file:
-            content = json.loads(servers_file.read())
+        self.fetch_saved()
+        return super().on_kv_post(base_widget)
+
+    def fetch_saved(self, *args) -> None:
+        json_path = os.path.join(self.app.directory, "data", "servers.json")
+        if os.path.exists(json_path):
+            with open(json_path, "r", encoding="utf-8") as servers_file:
+                content = json.loads(servers_file.read())
+        else:
+            content = {"servers": []}
+        self.ids.MainLayout.ids.ServersList.clear_widgets()
         for servers in content["servers"]:
             self.ids.MainLayout.ids.ServersList.add_widget(ServerTile(name=servers))
-        return super().on_kv_post(base_widget)
 
     def notify_info(self, *args) -> None:
         self.app.notify(

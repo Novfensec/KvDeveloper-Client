@@ -7,7 +7,7 @@ from kivy.utils import platform
 
 if platform == "android":
 
-    from jnius import autoclass
+    from jnius import autoclass # type: ignore
     from libs.utils import request_android_permissions, Permission
 
     PythonActivity = autoclass("org.kivy.android.PythonActivity")
