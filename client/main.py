@@ -69,8 +69,9 @@ class KvDeveloperClient(CarbonApp):
 
     def start_scan(self, *args) -> None:
         if platform == "android":
-            from libs.scanner import scan_qr_and_get_url
-            scan_qr_and_get_url(self.launch)
+            # from libs.scanner import scan_qr_and_get_url
+            # scan_qr_and_get_url(self.launch)
+            pass
         pass
 
     def fetch_config(self, server_url: str, *args) -> dict | bool:
