@@ -1,0 +1,15 @@
+[app]
+entrypoint = "main.py"
+app_name = "MyApp"
+include_exts = [
+    ".py",
+    ".kv",
+    ".png",
+    ".txt",
+    ".atlas",
+    ".jpg",
+    ".toml",
+]
+ignore_files = []
+ignore_dirs = []
+noreload_files = []

@@ -114,7 +114,7 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
                 # Skip unwanted patterns
                 if href.startswith("__pycache__/") or href.endswith(
                     (".pyc", ".pyo", ".pyd")
-                ):
+                ) or any(href.startswith(dirname) for dirname in self.ignore_dirs):
                     continue
 
                 full_url = urljoin(url, href)
