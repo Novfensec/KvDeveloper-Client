@@ -51,17 +51,20 @@
                 text: "Logs will appear below."
                 style: "body_compact_01"
 
-            CDivider:
+        CDivider:
 
-            LogRecycler:
-                id: Logger
-                viewclass: "CLabel"
+        CScrollView:
+            do_scroll_x: False
 
-                RecycleBoxLayout:
-                    orientation: "vertical"
-                    default_size_hint: None, None
-                    default_size: None, None
-                    size_hint: 1, None
-                    height: self.minimum_height
-                    spacing: dp(16)
+            CGridLayout:
+                id: logs_grid
+                spacing: dp(16)
+                cols: 1
+                adaptive: [False, True]
+                padding: [0, dp(8), 0, dp(128)]
 
+                CLabel:
+                    id: logs_label
+                    padding: dp(8)
+                    style: "code_02"
+                    typeface: "IBM Plex Mono"

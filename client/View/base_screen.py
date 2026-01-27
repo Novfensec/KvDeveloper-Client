@@ -1,20 +1,8 @@
 from kivy.properties import ObjectProperty
 from kivy.app import App
-from kivy.uix.recycleview import RecycleView
 
 from carbonkivy.uix.screen import CScreen
 from carbonkivy.uix.loading import CLoadingLayout
-
-
-class LogRecycler(RecycleView):
-
-    def __init__(self, **kwargs):
-        super(LogRecycler, self).__init__(**kwargs)
-
-    def log(self, text: str, status: str = "INFO", *args) -> None:
-        self.data = [{
-            "text": text,
-        }]
 
 
 class LoadingLayout(CLoadingLayout):

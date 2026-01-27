@@ -19,3 +19,9 @@ def launch_client_activity(entrypoint_path: str) -> None:
     intent.setData(uri)
     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
     activity.startActivity(intent)
+
+@run_on_ui_thread
+def stop_client_activity() -> None:
+    activity_instance = ClientActivity.mActivity
+    if activity_instance:
+        activity_instance.finish()

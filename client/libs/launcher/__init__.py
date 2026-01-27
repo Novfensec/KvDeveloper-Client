@@ -2,7 +2,8 @@ from __future__ import annotations
 
 __all__ = ("ApplicationLauncher",)
 
-import os, sys, shutil, threading, subprocess  # nosec
+import os, sys, threading, subprocess  # nosec
+from concurrent.futures import ThreadPoolExecutor
 import requests
 from html.parser import HTMLParser
 from urllib.parse import urljoin
@@ -21,6 +22,7 @@ if platform == "android":
     from libs.launcher.android import (
         AppStorageDir,
         launch_client_activity,
+        stop_client_activity,
     )
 
 
@@ -58,6 +60,8 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
 
     def __init__(self, **kwargs) -> None:
         super(ApplicationLauncher, self).__init__(**kwargs)
+        self.session = requests.Session()  # Use session for connection pooling
+        self.max_workers = 5
         self.process = None
         self.app = App.get_running_app()
         self.loading_layout = LoadingLayout()
@@ -76,12 +80,15 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
     def download_and_run(self, *args) -> None:
         try:
             os.makedirs(self.target_dir, exist_ok=True)
+            self.app.status = "Scanning server..."
 
-            self.app.status = f"Downloading files from server at {self.server_url}"
-
+            # 1. Fetch the file list
             files_to_fetch = [self.entrypoint] + self.fetch_files()
-            for filename in files_to_fetch:
-                self.download_file_from_server(filename)
+
+            # 2. Use a ThreadPool for parallel downloads
+            self.app.status = f"Syncing {len(files_to_fetch)} files..."
+            with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
+                executor.map(self.download_file_from_server, files_to_fetch)
 
             self.app.status = "Running app..."
             self.run_entrypoint()
@@ -98,6 +105,10 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
             seen = set()
         if url is None:
             url = self.server_url.rstrip("/") + "/"
+        print("URL: %s", url)
+
+        if any(url.startswith(dirname) for dirname in self.ignore_dirs):
+            return
 
         files = []
 
@@ -140,22 +151,34 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
 
     def download_file_from_server(self, filename: str) -> None:
         url = f"{self.server_url}/{filename}"
-        if os.path.basename(filename) in self.ignore_files or os.path.dirname(filename) in self.ignore_dirs:
-            print(f"[SYNC] Ignoring {os.path.basename(filename)}")
-            return
         local_path = os.path.join(self.target_dir, filename)
-        if os.path.basename(filename) in self.noreload_files and os.path.exists(local_path):
-            print(f"[SYNC] Ignoring {os.path.basename(filename)}")
+
+        # Filtering logic
+        if os.path.basename(filename) in self.ignore_files or any(d in filename for d in self.ignore_dirs):
             return
+
         os.makedirs(os.path.dirname(local_path), exist_ok=True)
+
         try:
-            r = requests.get(url, timeout=3)
-            r.raise_for_status()
-            with open(local_path, "wb") as f:
-                f.write(r.content)
-            print(f"[SYNC] Downloaded {filename} at {local_path}")
+            # Check headers first (HEAD request) to see if we actually need the file
+            head = self.session.head(url, timeout=3)
+            server_size = int(head.headers.get('Content-Length', 0))
+
+            if os.path.exists(local_path):
+                if os.path.getsize(local_path) == server_size:
+                    # File likely identical, skip download
+                    return
+
+            # Stream the download for large files
+            with self.session.get(url, timeout=5, stream=True) as r:
+                r.raise_for_status()
+                with open(local_path, "wb") as f:
+                    for chunk in r.iter_content(chunk_size=8192):
+                        if chunk:
+                            f.write(chunk)
+
         except Exception as e:
-            print(f"[ERROR] Failed to download {filename}: {e}")
+            print(f"[ERROR] {filename}: {e}")
 
     def start_auto_sync(self) -> None:
         threading.Thread(target=self.sync_loop, daemon=True).start()
@@ -170,7 +193,7 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
                     changed_files = r.json()
                     for file in changed_files:
                         self.download_file_from_server(file)
-                        if file == self.entrypoint:
+                        if str(file) == str(self.entrypoint):
                             self.restart_entrypoint()
             except Exception as e:
                 print(f"[SYNC ERROR] {e}")
@@ -204,13 +227,16 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
             )
 
     def restart_entrypoint(self) -> None:
-        if platform == "windows":
+        print("[RESTART] Killing previous process...")
+        if platform == "win":
             if self.process and self.process.poll() is None:
-                print("[RESTART] Killing previous process...")
                 self.process.terminate()
                 self.process.wait()
-            print(f"[RESTART] Restarting {self.entrypoint}")
-            self.run_entrypoint()
+        elif platform == "android":
+            stop_client_activity()
+
+        print(f"[RESTART] Restarting {self.entrypoint}")
+        self.run_entrypoint()
 
     @mainthread
     def display_indicator(self, val: bool = True, *args) -> None:

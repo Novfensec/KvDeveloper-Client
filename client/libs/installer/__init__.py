@@ -1,4 +1,5 @@
-import os, sys, pkg_resources
+import importlib.metadata
+import os, sys, traceback
 
 import subprocess  # nosec
 
@@ -25,12 +26,11 @@ else:
 
 os.makedirs(install_dir, exist_ok=True)
 
-pre_installed_packages = [dist.project_name for dist in pkg_resources.working_set] + [
-    dist.project_name for dist in list(pkg_resources.find_distributions(install_dir))
-]
+
+pre_installed_packages = [dist.metadata['Name'] for dist in importlib.metadata.distributions()] + [dist.metadata['Name'] for dist in importlib.metadata.distributions(path=install_dir)]
 
 
-def install(package_name: str) -> None:
+def install(package_name: str, log_callback: callable) -> None:
 
     if platform == "android":
         request_android_permissions(
@@ -43,13 +43,27 @@ def install(package_name: str) -> None:
 
     if not package_name in pre_installed_packages:
         try:
-            print(f"Installing deps: {package_name}")
             process = subprocess.Popen(  # nosec
-                f"{sys.executable} -m pip install {package_name} --target {install_dir} --no-deps",
+                    [sys.executable, "-m", "pip", "install", package_name, "--target", install_dir, "--no-deps"],
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.STDOUT,
+                    text=True,
+                    bufsize=1,
             )
-            process.communicate()
-            App.get_running_app().manager_screens.get_screen("installer screen").ids.Logger.log(f"{process.stdout}")
+
+            for line in process.stdout:
+                if "error" in line.lower():
+                    log_callback(f"[ERROR] {line.strip()}")
+                else:
+                    log_callback(line.strip())
+            
+            log_callback(traceback.format_exc())
+
+            process.stdout.close()
+            return_code = process.wait()
+            log_callback(f"Installation finished with exit code {return_code}")
+
         except ModuleNotFoundError as e:
-            print("Failed")
+            print("Failed: e")
     else:
         print(f"[INSTALL] {package_name} already installed.")
