@@ -33,7 +33,7 @@ jobs:
       - name: Cache Buildozer directory in app
         uses: actions/cache@v4
         with:
-          path: client/.buildozer
+          path: .buildozer
           key: ${{ runner.os }}-buildozer-app
           restore-keys: |
             ${{ runner.os }}-buildozer-app
@@ -51,6 +51,7 @@ jobs:
         run: |
           sudo apt update
           sudo apt-get install -y \
+            ant \
             build-essential \
             git \
             ffmpeg \

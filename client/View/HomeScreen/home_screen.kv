@@ -98,7 +98,7 @@
             icon: "connect"
             role: "Large Productive"
             on_press:
-                app.launch(ServerUrlEntry.text)
+                root.screen.launch(ServerUrlEntry.text)
 
     CDivider:
 
@@ -163,5 +163,4 @@
     UIShellButton:
         icon: "play"
         on_press:
-            app.launch(root.name)
-
+            root.launch(root.name)

@@ -21,6 +21,7 @@ if platform == "android":
     from libs.launcher.android import (
         AppStorageDir,
         launch_client_activity,
+        stop_client_activity,
     )
 
 
@@ -204,13 +205,16 @@ class ApplicationLauncher(EventDispatcher, DeclarativeBehavior):
             )
 
     def restart_entrypoint(self) -> None:
-        if platform == "windows":
+        print("[RESTART] Killing previous process...")
+        if platform == "win":
             if self.process and self.process.poll() is None:
-                print("[RESTART] Killing previous process...")
                 self.process.terminate()
                 self.process.wait()
-            print(f"[RESTART] Restarting {self.entrypoint}")
-            self.run_entrypoint()
+        elif platform == "android":
+            stop_client_activity()
+
+        print(f"[RESTART] Restarting {self.entrypoint}")
+        self.run_entrypoint()
 
     @mainthread
     def display_indicator(self, val: bool = True, *args) -> None:

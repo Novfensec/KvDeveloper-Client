@@ -9,11 +9,27 @@ import org.kivy.android.PythonActivity;
 
 public class ClientActivity extends PythonActivity {
     private static final String TAG = "ClientActivity";
+    // Static reference to the current instance
+
+    private static ClientActivity instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.i(TAG, "ClientActivity started");
         super.onCreate(savedInstanceState);
+        instance = this;
+    }
+
+    public static ClientActivity getInstance() {
+        return instance;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (instance == this) {
+            instance = null;  // clear reference
+        }
     }
 
     @Override

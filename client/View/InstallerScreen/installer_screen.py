@@ -11,10 +11,11 @@ class InstallerScreenView(BaseScreenView):
         super(InstallerScreenView, self).__init__(*args, **kwargs)
 
     def install_package(self, package_name: str) -> None:
-        from libs.installer import install
-        threading.Thread(
-            target=lambda: install(package_name=package_name), daemon=True
-        ).start()
+        # from libs.installer import install
+        # threading.Thread(
+        #     target=lambda: install(package_name=package_name), daemon=True
+        # ).start()
+        self.notify_info()
 
     def notify_info(self, *args) -> None:
         self.app.notify(

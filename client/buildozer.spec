@@ -42,7 +42,7 @@ version = 0.2
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3, kivy==2.3.1, https://github.com/CarbonKivy/CarbonKivy/archive/docs.zip, android, requests, pyjnius, kaki, watchdog, pygments
+requirements = python3, kivy==2.3.1, https://github.com/CarbonKivy/CarbonKivy/archive/master.zip, android, requests, pyjnius, kaki, watchdog, pygments, plyer, sqlite3, pillow
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -56,7 +56,7 @@ icon.filename = %(source.dir)s/assets/images/kvdeveloper_logo512.png
 
 # (list) Supported orientations
 # Valid options are: landscape, portrait, portrait-reverse, landscape-reverse, or all
-orientation = portrait
+orientation = all
 
 # (list) List of services to declare
 # This is currently only relevant to Android services.
@@ -104,7 +104,30 @@ android.presplash_color = #000000
 
 # (list) Permissions
 # (See https://python-for-android.readthedocs.io/en/latest/buildoptions.html for all the supported syntaxes and properties)
-android.permissions = android.permission.INTERNET, android.permission.ACCESS_NETWORK_STATE, android.permission.WAVE_LOCK, android.permission.MANAGE_EXTERNAL_STORAGE, android.permission.READ_EXTERNAL_STORAGE, android.permission.WRITE_EXTERNAL_STORAGE, android.permission.CAMERA
+[app:android.permissions]
+android.permission.INTERNET
+android.permission.ACCESS_NETWORK_STATE
+android.permission.WAVE_LOCK
+android.permission.READ_EXTERNAL_STORAGE
+android.permission.WRITE_EXTERNAL_STORAGE
+android.permission.CAMERA
+android.permission.READ_MEDIA_IMAGES
+android.permission.READ_MEDIA_AUDIO
+android.permission.READ_MEDIA_VIDEO
+android.permission.ACCESS_FINE_LOCATION
+android.permission.ACCESS_COARSE_LOCATION
+android.permission.ACCESS_BACKGROUND_LOCATION
+android.permission.READ_PHONE_STATE
+android.permission.SCHEDULE_EXACT_ALARM
+android.permission.POST_NOTIFICATIONS
+android.permission.ACCESS_WIFI_STATE
+android.permission.VIBRATE
+android.permission.FLASHLIGHT
+android.permission.RECORD_AUDIO
+android.permission.BLUETOOTH
+android.permission.USE_BIOMETRIC
+android.permission.USE_FINGERPRINT
+
 
 # (list) features (adds uses-feature -tags to manifest)
 #android.features = android.hardware.usb.host
@@ -113,7 +136,7 @@ android.permissions = android.permission.INTERNET, android.permission.ACCESS_NET
 android.api = 36
 
 # (int) Minimum API your APK / AAB will support.
-android.minapi = 28
+android.minapi = 32
 
 # (int) Android SDK version to use
 #android.sdk = 20
@@ -122,7 +145,7 @@ android.minapi = 28
 android.ndk = 28c
 
 # (int) Android NDK API to use. This is the minimum API your app will support, it should usually match android.minapi.
-#android.ndk_api = 21
+#android.ndk_api = 32
 
 # (str) Android NDK directory (if empty, it will be automatically downloaded.)
 #android.ndk_path =
@@ -318,16 +341,16 @@ android.allow_backup = True
 # android.no-byte-compile-python = False
 
 # (str) The format used to package the app for release mode (aab or apk or aar).
-# android.release_artifact = aab
+android.release_artifact = aab
 
 # (str) The format used to package the app for debug mode (apk or aar).
-# android.debug_artifact = apk
+android.debug_artifact = apk
 
 # (str) A display cutout is an area on some devices that extends into the display surface.
 # It allows for an edge-to-edge experience while providing space for important sensors on the front of the device.
 # Available options for Android API >= 28 are "default, shortEdges, never" and defaults to never.
 # Android documentation: https://developer.android.com/develop/ui/views/layout/display-cutout
-#android.display_cutout = never
+android.display_cutout = shortEdges
 
 #
 # Python for android (p4a) specific

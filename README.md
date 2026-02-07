@@ -63,6 +63,46 @@ Download and extract debuggable package.zip from the [latest workflow run](https
 
 [Live Demo](https://youtu.be/-VTCTNmHB94)
 
+**Pre-installed libs:**
+- kivy
+- carbonkivy
+- plyer
+- pyjnius
+- requests
+- android
+- kaki
+- watchdog
+- sqlite3
+- pygments
+- pillow
+
+**Available permissions in manifest you can ask for during runtime:**
+
+```
+android.permission.INTERNET
+android.permission.ACCESS_NETWORK_STATE
+android.permission.WAVE_LOCK
+android.permission.READ_EXTERNAL_STORAGE
+android.permission.WRITE_EXTERNAL_STORAGE
+android.permission.CAMERA
+android.permission.READ_MEDIA_IMAGES
+android.permission.READ_MEDIA_AUDIO
+android.permission.READ_MEDIA_VIDEO
+android.permission.ACCESS_FINE_LOCATION
+android.permission.ACCESS_COARSE_LOCATION
+android.permission.ACCESS_BACKGROUND_LOCATION
+android.permission.READ_PHONE_STATE
+android.permission.SCHEDULE_EXACT_ALARM
+android.permission.POST_NOTIFICATIONS
+android.permission.ACCESS_WIFI_STATE
+android.permission.VIBRATE
+android.permission.FLASHLIGHT
+android.permission.RECORD_AUDIO
+android.permission.BLUETOOTH
+android.permission.USE_BIOMETRIC
+android.permission.USE_FINGERPRINT
+```
+
 
 ## Part of KvDeveloper Ecosystem
 KvDeveloper Client is a subproject under the [KvDeveloper](https://github.com/Novfensec/KvDeveloper) initiative. The ecosystem aims to streamline Python-powered mobile workflows with modern tooling.
