@@ -22,6 +22,6 @@ def launch_client_activity(entrypoint_path: str) -> None:
 
 @run_on_ui_thread
 def stop_client_activity() -> None:
-    activity_instance = ClientActivity.mActivity
+    activity_instance = ClientActivity.getInstance()
     if activity_instance:
         activity_instance.finish()

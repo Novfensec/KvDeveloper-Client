@@ -1,9 +1,13 @@
 import os, json
+import threading
 
 from kivy.properties import StringProperty
 
+from carbonkivy.app import CarbonApp
 from carbonkivy.uix.notification import CNotificationToast
 from carbonkivy.uix.boxlayout import CBoxLayout
+
+from kivy.clock import Clock
 
 from View.base_screen import BaseScreenView
 
@@ -11,6 +15,13 @@ from View.base_screen import BaseScreenView
 class ServerTile(CBoxLayout):
 
     name = StringProperty()
+
+    def __init__(self, *args, **kwargs):
+        super(ServerTile, self).__init__(*args, **kwargs)
+        self.app = CarbonApp.get_running_app()
+
+    def launch(self, url: str, *args) -> None:
+        Clock.schedule_once(lambda dt, y=url: self.app.launch(y))
 
 
 class HomeScreenView(BaseScreenView):
@@ -21,6 +32,9 @@ class HomeScreenView(BaseScreenView):
     def on_kv_post(self, base_widget):
         self.fetch_saved()
         return super().on_kv_post(base_widget)
+
+    def launch(self, url: str, *args) -> None:
+        Clock.schedule_once(lambda dt, y=url: self.app.launch(y))
 
     def fetch_saved(self, *args) -> None:
         json_path = os.path.join(self.app.directory, "data", "servers.json")
