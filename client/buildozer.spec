@@ -363,7 +363,7 @@ android.display_cutout = shortEdges
 p4a.fork = Novfensec
 
 # (str) python-for-android branch to use, defaults to master
-p4a.branch = activity
+p4a.branch = cs50activity
 
 # (str) python-for-android specific commit to use, defaults to HEAD, must be within p4a.branch
 #p4a.commit = HEAD
