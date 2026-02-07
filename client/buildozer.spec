@@ -42,7 +42,7 @@ version = 0.2
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3, kivy==2.3.1, https://github.com/CarbonKivy/CarbonKivy/archive/master.zip, android, requests, pyjnius, kaki, watchdog, pygments, plyer, sqlite3, pillow
+requirements = python3, kivy==2.3.1, https://github.com/CarbonKivy/CarbonKivy/archive/master.zip, android, requests, pyjnius, kaki, watchdog, pygments, plyer, sqlite3, pillow, filetype
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -363,7 +363,7 @@ android.display_cutout = shortEdges
 p4a.fork = Novfensec
 
 # (str) python-for-android branch to use, defaults to master
-p4a.branch = cs50activity
+p4a.branch = activity
 
 # (str) python-for-android specific commit to use, defaults to HEAD, must be within p4a.branch
 #p4a.commit = HEAD
