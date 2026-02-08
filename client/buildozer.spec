@@ -104,29 +104,7 @@ android.presplash_color = #000000
 
 # (list) Permissions
 # (See https://python-for-android.readthedocs.io/en/latest/buildoptions.html for all the supported syntaxes and properties)
-[app:android.permissions]
-android.permission.INTERNET
-android.permission.ACCESS_NETWORK_STATE
-android.permission.WAVE_LOCK
-android.permission.READ_EXTERNAL_STORAGE
-android.permission.WRITE_EXTERNAL_STORAGE
-android.permission.CAMERA
-android.permission.READ_MEDIA_IMAGES
-android.permission.READ_MEDIA_AUDIO
-android.permission.READ_MEDIA_VIDEO
-android.permission.ACCESS_FINE_LOCATION
-android.permission.ACCESS_COARSE_LOCATION
-android.permission.ACCESS_BACKGROUND_LOCATION
-android.permission.READ_PHONE_STATE
-android.permission.SCHEDULE_EXACT_ALARM
-android.permission.POST_NOTIFICATIONS
-android.permission.ACCESS_WIFI_STATE
-android.permission.VIBRATE
-android.permission.FLASHLIGHT
-android.permission.RECORD_AUDIO
-android.permission.BLUETOOTH
-android.permission.USE_BIOMETRIC
-android.permission.USE_FINGERPRINT
+android.permissions = android.permission.INTERNET, android.permission.ACCESS_NETWORK_STATE, android.permission.WAVE_LOCK, android.permission.READ_EXTERNAL_STORAGE, android.permission.WRITE_EXTERNAL_STORAGE, android.permission.CAMERA, android.permission.READ_MEDIA_IMAGES, android.permission.READ_MEDIA_AUDIO, android.permission.READ_MEDIA_VIDEO, android.permission.ACCESS_FINE_LOCATION, android.permission.ACCESS_COARSE_LOCATION, android.permission.ACCESS_BACKGROUND_LOCATION, android.permission.READ_PHONE_STATE, android.permission.SCHEDULE_EXACT_ALARM, android.permission.POST_NOTIFICATIONS, android.permission.ACCESS_WIFI_STATE, android.permission.VIBRATE, android.permission.FLASHLIGHT, android.permission.RECORD_AUDIO, android.permission.BLUETOOTH, android.permission.USE_BIOMETRIC, android.permission.USE_FINGERPRINT
 
 
 # (list) features (adds uses-feature -tags to manifest)
