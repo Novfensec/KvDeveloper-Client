@@ -1,6 +1,10 @@
-import os, ssl, requests, json
+import os
+import ssl
 
-ssl.create_default_context = ssl._create_unverified_context
+ssl.create_default_https_context = ssl._create_unverified_context
+
+import json
+import requests
 
 from kivy.core.window import Window
 from kivy.clock import Clock, mainthread
