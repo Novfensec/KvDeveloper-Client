@@ -23,6 +23,7 @@ from kivy.properties import StringProperty, BooleanProperty
 from carbonkivy.app import CarbonApp
 from carbonkivy.uix.notification import CNotificationToast
 from carbonkivy.uix.screenmanager import CScreenManager
+from carbonkivy.utils import update_system_ui
 
 from libs.launcher import ApplicationLauncher
 from libs.utils import toml_parser
@@ -40,6 +41,7 @@ class KvDeveloperClient(CarbonApp):
     running = BooleanProperty(None, allownone=True)
 
     def __init__(self, *args, **kwargs) -> None:
+        self.defaults = False
         super(KvDeveloperClient, self).__init__(*args, **kwargs)
         self.load_all_kv_files(os.path.join(self.directory, "View"))
         self.launcher = ApplicationLauncher()
@@ -47,8 +49,14 @@ class KvDeveloperClient(CarbonApp):
 
     def build(self) -> UI:
         self.manager_screens = UI()
+        self.apply_styles()
         self.generate_application_screens()
         return self.manager_screens
+
+    def apply_styles(self, *args) -> None:
+        Window.clearcolor = self.background
+        icon_style = "Dark" if self.theme in ["White", "Gray10"] else "Light"
+        update_system_ui(self.background, self.background, icon_style=icon_style, pad_nav=True)
 
     def generate_application_screens(self) -> None:
         # adds different screen widgets to the screen manager
