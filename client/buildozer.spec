@@ -56,7 +56,7 @@ icon.filename = %(source.dir)s/assets/images/kvdeveloper_logo512.png
 
 # (list) Supported orientations
 # Valid options are: landscape, portrait, portrait-reverse, landscape-reverse, or all
-orientation = all
+orientation = portrait
 
 # (list) List of services to declare
 # This is currently only relevant to Android services.
