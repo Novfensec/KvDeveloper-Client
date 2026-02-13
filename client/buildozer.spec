@@ -34,7 +34,7 @@ source.include_patterns = assets/*, assets/images/*.png, assets/images/*.jpg
 #source.exclude_patterns = license,images/*/*.jpg
 
 # (str) Application versioning (method 1)
-version = 0.2
+version = 0.3
 
 # (str) Application versioning (method 2)
 # version.regex = __version__ = ['"](.*)['"]
@@ -42,7 +42,7 @@ version = 0.2
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3, kivy==2.3.1, https://github.com/CarbonKivy/CarbonKivy/archive/master.zip, android, requests, pyjnius, kaki, watchdog, pygments, plyer, sqlite3, pillow, filetype
+requirements = python3, kivy, https://github.com/CarbonKivy/CarbonKivy/archive/master.zip, android, requests, pyjnius, kaki, watchdog, pygments, plyer, sqlite3, pillow
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -76,14 +76,14 @@ orientation = portrait
 # author = © Copyright Info
 
 # Kivy version to use
-osx.kivy_version = 2.3.0
+osx.kivy_version = 2.3.1
 
 #
 # Android specific
 #
 
 # (bool) Indicate if the application should be fullscreen or not
-fullscreen = 1
+fullscreen = 0
 
 # (string) Presplash background color (for android toolchain)
 # Supported formats are: #RRGGBB #AARRGGBB or one of the following names:
@@ -104,7 +104,7 @@ android.presplash_color = #000000
 
 # (list) Permissions
 # (See https://python-for-android.readthedocs.io/en/latest/buildoptions.html for all the supported syntaxes and properties)
-android.permissions = android.permission.INTERNET, android.permission.ACCESS_NETWORK_STATE, android.permission.WAVE_LOCK, android.permission.READ_EXTERNAL_STORAGE, android.permission.WRITE_EXTERNAL_STORAGE, android.permission.CAMERA, android.permission.READ_MEDIA_IMAGES, android.permission.READ_MEDIA_AUDIO, android.permission.READ_MEDIA_VIDEO, android.permission.ACCESS_FINE_LOCATION, android.permission.ACCESS_COARSE_LOCATION, android.permission.ACCESS_BACKGROUND_LOCATION, android.permission.READ_PHONE_STATE, android.permission.SCHEDULE_EXACT_ALARM, android.permission.POST_NOTIFICATIONS, android.permission.ACCESS_WIFI_STATE, android.permission.VIBRATE, android.permission.FLASHLIGHT, android.permission.RECORD_AUDIO, android.permission.BLUETOOTH, android.permission.USE_BIOMETRIC, android.permission.USE_FINGERPRINT
+android.permissions = android.permission.INTERNET, android.permission.ACCESS_NETWORK_STATE, android.permission.WAKE_LOCK, android.permission.READ_EXTERNAL_STORAGE, android.permission.WRITE_EXTERNAL_STORAGE, android.permission.CAMERA, android.permission.READ_MEDIA_IMAGES, android.permission.READ_MEDIA_AUDIO, android.permission.READ_MEDIA_VIDEO, android.permission.ACCESS_FINE_LOCATION, android.permission.ACCESS_COARSE_LOCATION, android.permission.ACCESS_BACKGROUND_LOCATION, android.permission.READ_PHONE_STATE, android.permission.SCHEDULE_EXACT_ALARM, android.permission.POST_NOTIFICATIONS, android.permission.ACCESS_WIFI_STATE, android.permission.VIBRATE, android.permission.FLASHLIGHT, android.permission.RECORD_AUDIO, android.permission.BLUETOOTH, android.permission.USE_BIOMETRIC, android.permission.USE_FINGERPRINT
 
 
 # (list) features (adds uses-feature -tags to manifest)
@@ -114,7 +114,7 @@ android.permissions = android.permission.INTERNET, android.permission.ACCESS_NET
 android.api = 36
 
 # (int) Minimum API your APK / AAB will support.
-android.minapi = 30
+android.minapi = 28
 
 # (int) Android SDK version to use
 #android.sdk = 20
@@ -123,7 +123,7 @@ android.minapi = 30
 android.ndk = 28c
 
 # (int) Android NDK API to use. This is the minimum API your app will support, it should usually match android.minapi.
-android.ndk_api = 30
+android.ndk_api = 28
 
 # (str) Android NDK directory (if empty, it will be automatically downloaded.)
 #android.ndk_path =
@@ -328,7 +328,7 @@ android.debug_artifact = apk
 # It allows for an edge-to-edge experience while providing space for important sensors on the front of the device.
 # Available options for Android API >= 28 are "default, shortEdges, never" and defaults to never.
 # Android documentation: https://developer.android.com/develop/ui/views/layout/display-cutout
-android.display_cutout = shortEdges
+android.display_cutout = default
 
 #
 # Python for android (p4a) specific
