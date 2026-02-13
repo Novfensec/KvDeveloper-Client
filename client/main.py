@@ -49,9 +49,12 @@ class KvDeveloperClient(CarbonApp):
 
     def build(self) -> UI:
         self.manager_screens = UI()
-        self.apply_styles()
         self.generate_application_screens()
         return self.manager_screens
+
+    def on_start(self):
+        self.apply_styles()
+        return super().on_start()
 
     def apply_styles(self, *args) -> None:
         Window.clearcolor = self.background
