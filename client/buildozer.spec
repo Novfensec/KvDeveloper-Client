@@ -114,7 +114,7 @@ android.permissions = android.permission.INTERNET, android.permission.ACCESS_NET
 android.api = 36
 
 # (int) Minimum API your APK / AAB will support.
-android.minapi = 32
+android.minapi = 30
 
 # (int) Android SDK version to use
 #android.sdk = 20
@@ -123,7 +123,7 @@ android.minapi = 32
 android.ndk = 28c
 
 # (int) Android NDK API to use. This is the minimum API your app will support, it should usually match android.minapi.
-#android.ndk_api = 32
+android.ndk_api = 30
 
 # (str) Android NDK directory (if empty, it will be automatically downloaded.)
 #android.ndk_path =
@@ -175,7 +175,7 @@ android.accept_sdk_license = True
 #android.whitelist =
 
 # (bool) If True, your application will be listed as a home app (launcher app)
-android.home_app = True
+# android.home_app = True
 
 # (str) Path to a custom whitelist file
 #android.whitelist_src =
