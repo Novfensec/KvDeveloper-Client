@@ -328,7 +328,7 @@ android.debug_artifact = apk
 # It allows for an edge-to-edge experience while providing space for important sensors on the front of the device.
 # Available options for Android API >= 28 are "default, shortEdges, never" and defaults to never.
 # Android documentation: https://developer.android.com/develop/ui/views/layout/display-cutout
-android.display_cutout = default
+android.display_cutout = shortEdges
 
 #
 # Python for android (p4a) specific
