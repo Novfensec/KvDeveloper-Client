@@ -116,7 +116,7 @@ jobs:
       - name: Install pip dependencies
         run: |
           pip install --upgrade pip
-          pip install https://github.com/Novfensec/buildozer/archive/Cython.zip cython==3.0.11
+          pip install buildozer cython
 
       # Build with Buildozer
       - name: Build with Buildozer
